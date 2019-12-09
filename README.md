@@ -1,5 +1,5 @@
 # send
-send command to  remote machine with golang
+send commands to  remote machines with golang
 ```bash
 send remote commands over ssh. works on MS or Linux (need to compile for both)
 for now password authentication is NOT supported, ssh key only
