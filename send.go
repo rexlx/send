@@ -38,7 +38,7 @@ MS:
 specifcy a log name:
 $ send "sudo updatedb" host1 -l logs/some.log
 
-send a commnad to multiple hosts:
+send a command to multiple hosts:
 $ send "df -h" -m "host1 host2 host3"
 
 specify different host names:
@@ -150,6 +150,7 @@ func publicKey(path string) ssh.AuthMethod {
 func executeCmd(cmd, host, port string, args map[string]string, conf *ssh.ClientConfig) string {
 	// init our stdout
 	var stdout bytes.Buffer
+	var stderr bytes.Buffer
 	// log the attempt
 	info := fmt.Sprintf("attempting to connect to %v on port %v as %v\n", host, port, conf.User)
 	logit(info, args["logfile"])
@@ -176,12 +177,20 @@ func executeCmd(cmd, host, port string, args map[string]string, conf *ssh.Client
 	defer session.Close()
 	// get the stdout
 	session.Stdout = &stdout
+	session.Stderr = &stderr
+	// if len(stderr.String()) > 0 {
+	// 	return fmt.Sprintf("%s:\n%s", host, stderr.String())
+	// }
 	//logit
 	logit(fmt.Sprintf("running %v on %v\n", cmd, host), args["logfile"])
 	// run the command
 	session.Run(cmd)
 	// pass the stdout back to our channel
-	return fmt.Sprintf("%s:\n%s", host, stdout.String())
+	if len(stderr.String()) > 0 {
+		return fmt.Sprintf("%s:\n%s", host, stderr.String())
+	} else {
+		return fmt.Sprintf("%s:\n%s", host, stdout.String())
+	}
 
 }
 
