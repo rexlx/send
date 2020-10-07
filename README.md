@@ -1,3 +1,5 @@
+![example](/img/send.png?raw=true "example")
+
 # initial setup
 ## files to modify:
 1. js/index.html:
