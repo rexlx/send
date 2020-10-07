@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>its stuff</title>
+</head>
+
+<body>
+    <div id="home">
+        <a href="http://192.168.1.45:8080/send/help.html" class="waves-effect waves-light btn" role="button">help</a>
+    </div>
+    <div id="options">
+        <br>
+        <select id="svr-list" class="dropdown-trigger btn">
+            <option>none</option>
+            <!-- we manipulate this field in the dom -->
+        </select>
+        <div>
+            <label>
+                <input id="display" name="group1" type="checkbox" class="cbox" />
+                <span>display nodes</span>
+            </label>
+        </div>
+    </div>
+    <div>
+        <br><br>
+        <label for="command">command</label>
+        <input type="text" id="command" , placeholder="uptime">
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input placeholder="rxlx" id="user" type="text">
+                        <label for="user">user</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="120" id="timeout" type="text">
+                        <label id="timeout-label" for="timeout">timeout</label>
+                    </div>
+                </div>
+            </form>
+            <div>
+                <a id="ordered"class="waves-effect waves-red btn" role="button">unordered</a>
+            </div>
+        </div>
+        <div id="special">
+            <p id="servers"></p>
+        </div>
+        <p id="output">output:</p>
+        <script defer type="text/javascript" src="js/materialize.min.js"></script>
+        <script src="main.js"></script>
+</body>
+
+</html>
