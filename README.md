@@ -5,7 +5,7 @@
 1. js/index.html:
 div with id home, modify the address and port to the server hosting the front end ( you can use the provided       bin/serve)
 2. js/main.js
-const url and api need to reflect your setup
+const url and api need to reflect your setup, refer to data/nodes.json for how to setup url
 3. node/send.js
 both const s = spawn() needs to know the actual path to your send binary
 
