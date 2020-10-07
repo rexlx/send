@@ -12,7 +12,7 @@ both const s = spawn() needs to know the actual path to your send binary
 2. i allow * in my cors policy, this may not be desirable to you, and if you understand what this message means, you know how to fix it...i think
 3. while send.js should run fine, you should remove node_modules and npm install.
 
-## trouble shooting
+## troubleshooting
 depending on whether or not you're using serve as the http server, you will have 2-3 logs to troubleshoot from
 1. api.log -> logs what request it recieved and when
 2. send.log -> logs what the send binary was sent, and whether or not it was able to connect
