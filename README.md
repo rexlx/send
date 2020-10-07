@@ -1,4 +1,24 @@
-# send
+# initial setup
+## files to modify:
+1. js/index.html:
+div with id home, modify the address and port to the server hosting the front end ( you can use the provided       bin/serve)
+2. js/main.js
+const url and api need to reflect your setup
+3. node/send.js
+both const s = spawn() needs to know the actual path to your send binary
+
+## additional config
+1. send doesnt handle passwords currently, ssh keys must be traded with all target machines
+2. i allow * in my cors policy, this may not be desirable to you, and if you understand what this message means, you know how to fix it...i think
+3. while send.js should run fine, you should remove node_modules and npm install.
+
+## trouble shooting
+depending on whether or not you're using serve as the http server, you will have 2-3 logs to troubleshoot from
+1. api.log -> logs what request it recieved and when
+2. send.log -> logs what the send binary was sent, and whether or not it was able to connect
+3. serve.log -> logs incoming http requests
+
+# send (cli)
 send commands to  remote machines with golang
 ```bash
 send remote commands over ssh. works on MS or Linux (need to compile for both)
@@ -8,7 +28,7 @@ usage:
 POSIX:
 $ send command host [args]
 
-MS:
+MS: **NOTE** if you add send.exe to the path, you can use just "send"
 > send.exe command host [args]
 
 specifcy a log name:
