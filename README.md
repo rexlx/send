@@ -3,23 +3,24 @@
 # initial setup
 ## files to modify:
 1. js/index.html:
-div with id home, modify the address and port to the server hosting the front end ( you can use the provided       bin/serve)
+div with id home, modify the address and port to the server hosting the front end ( you can use the provided bin/serve, an http server written in go.)
 2. js/main.js
-const url and api need to reflect your setup, refer to data/nodes.json for how to setup url
+const url and api need to reflect your setup, refer to data/nodes.json for an example of how to define your target machines
 3. node/send.js
-both const s = spawn() needs to know the actual path to your send binary
+both const s = spawn() needs to know the actual path to your send binary (this is the tool that sends commands over ssh)
+you may want to specify const log (cuurently ~/api.log)
 
 ## additional config
 1. send doesnt handle passwords currently, ssh keys must be traded with all target machines
 2. i allow * in my cors policy, this may not be desirable to you, and if you understand what this message means, you know how to fix it...i think
-3. while send.js should run fine, you should remove node_modules and npm install.
-4. you'll probably want to change the default user in js/main.js
+3. while node/send.js should run fine, you should remove node_modules and npm install.
+4. you'll probably want to change the default user in js/main.js, as i doubt you also use the *rxlx* username :)
 
 ## troubleshooting
 depending on whether or not you're using serve as the http server, you will have 2-3 logs to troubleshoot from
-1. api.log -> logs what request it recieved and when
-2. send.log -> logs what the send binary was sent, and whether or not it was able to connect
-3. serve.log -> logs incoming http requests
+1. api.log -> logs what request it recieved and when, written by node/send.js
+2. send.log -> logs what the send binary was sent, and whether or not it was able to connect, unless otherwise specified, it lives in the working directory of node/send.js
+3. serve.log -> logs incoming http requests, unless specified otherwise, lives in the ./ dir it was called
 
 # send (cli)
 send commands to  remote machines with golang
