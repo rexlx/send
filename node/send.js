@@ -7,7 +7,7 @@ const spawn = require("child_process").spawn  // used to run system commands
 const app = express()
 
 // if you need to change the log name
-const log = "/home/rxlx/bin/logs/api.log"
+const log = "api.log"
 
 // tell express to use the parser middlewear
 app.use(bodyParser.urlencoded({ extended: false }))
