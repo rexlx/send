@@ -8,7 +8,7 @@ div with id home, modify the address and port to the server hosting the front en
 const url and api need to reflect your setup, refer to data/nodes.json for an example of how to define your target machines
 3. node/send.js
 both const s = spawn() needs to know the actual path to your send binary (this is the tool that sends commands over ssh)
-you may want to specify const log (cuurently ~/api.log)
+you may want to specify const log (cuurently ./api.log)
 
 ## additional config
 1. send doesnt handle passwords currently, ssh keys must be traded with all target machines
