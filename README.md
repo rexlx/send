@@ -21,7 +21,8 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 <br>
 
 
-![example](/img/send.png?raw=true "example")
+![example]
+(https://storage.googleapis.com/rfitzhugh/send01.png)
 
 # initial setup
 ## files to modify:
