@@ -24,19 +24,19 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 
 # initial setup
 ## files to modify:
-1. js/index.html:
+1. frontend/index.html:
 div with id help, modify the address and port to the server hosting the front end, otherwise the help page wont work (you can use the provided bin/serve, an http server written in go.)
-2. js/main.js
+2. frontend/main.js
 const url and api need to reflect your setup, refer to data/nodes.json for an example of how to define your target machines
-3. node/send.js
+3. api/send.js
 both const s = spawn() needs to know the actual path to your send binary (this is the tool that sends commands over ssh)
 you may want to specify const log (cuurently ./api.log)
 
 ## additional config
 1. send is a passwordless application, ssh keys must be traded with all target machines
 2. i allow * in my cors policy, this may not be desirable to you, and if you understand what this message means, you know how to fix it...i think
-3. while node/send.js should run fine, you should remove node_modules and npm install.
-4. you'll probably want to change the default user in js/main.js, as i doubt you also use the *rxlx* username :)
+3. while api/send.js should run fine, you should remove node_modules and npm install.
+4. you'll probably want to change the default user in frontend/main.js, as i doubt you also use the *rxlx* username :)
 
 ## troubleshooting
 depending on whether or not you're using serve as the http server, you will have 2-3 logs to troubleshoot from
