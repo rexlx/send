@@ -10,6 +10,15 @@ the api is for the programmer who knows how to use the tool better than me
 <br>
 the web app is for the person who just needs to perform some tasks as needed
 
+# Packaging
+as this project continues to grow, I aim to make packaging easier and easier. right now I assume you know a few things:
+<br>
+1. how to use git
+2. how to run a binary and/or add it to your path
+3. you know how to run a node app
+4. you have a browser that can render the html or have an http server to host it out.
+5. you need to access nodes.json over http. this can be at localhost or served out.
+<br>
 ![example](/img/send.png?raw=true "example")
 
 # initial setup
