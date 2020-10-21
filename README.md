@@ -25,7 +25,7 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 # initial setup
 ## files to modify:
 1. js/index.html:
-div with id home, modify the address and port to the server hosting the front end ( you can use the provided bin/serve, an http server written in go.)
+div with id help, modify the address and port to the server hosting the front end, otherwise the help page wont work (you can use the provided bin/serve, an http server written in go.)
 2. js/main.js
 const url and api need to reflect your setup, refer to data/nodes.json for an example of how to define your target machines
 3. node/send.js
