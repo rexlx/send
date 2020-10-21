@@ -45,7 +45,7 @@ depending on whether or not you're using serve as the http server, you will have
 3. serve.log -> logs incoming http requests, unless specified otherwise, lives in the ./ dir it was called
 
 # send (api)
-the node app send.js is configured to listen on "http://192.168.1.45:3000/send" for a post containing the follwing data (json):
+the node app send.js is configured to listen on "http://ADDR_HERE:3000/send" for a post containing the follwing data (json):
 ```bash
 let command = {
   "cmd": "uptime",
