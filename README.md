@@ -49,7 +49,7 @@ let command = {
 }
 ```
 <br>
-using this in your program, you're probably going to something like the following:
+using this in your program, you're probably going to do something like the following:
 <br>
 1. how to use git
 <br>
