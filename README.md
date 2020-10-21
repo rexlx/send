@@ -1,3 +1,15 @@
+# What is this?
+Send proxies requests to an endpoint that houses keys to remote nodes. The idea is that a trusted user can send requests to perform tasks without passwords.
+
+## who is this for?
+everyone.
+<br>
+the cli tool is for the engineer who loves the sound of successive keyboard strokes
+<br>
+the api is for the programmer who knows how to use the tool better than me
+<br>
+the web app is for the person who just needs to perform some tasks as needed
+
 ![example](/img/send.png?raw=true "example")
 
 # initial setup
