@@ -33,7 +33,7 @@ both const s = spawn() needs to know the actual path to your send binary (this i
 you may want to specify const log (cuurently ./api.log)
 
 ## additional config
-1. send doesnt handle passwords currently, ssh keys must be traded with all target machines
+1. send is a passwordless application, ssh keys must be traded with all target machines
 2. i allow * in my cors policy, this may not be desirable to you, and if you understand what this message means, you know how to fix it...i think
 3. while node/send.js should run fine, you should remove node_modules and npm install.
 4. you'll probably want to change the default user in js/main.js, as i doubt you also use the *rxlx* username :)
