@@ -51,11 +51,15 @@ let command = {
 <br>
 using this in your program, you're probably going to something like the following:
 <br>
-* how to use git
-* how to run a binary and/or add it to your path
-* you know how to run a node app
-* you have a browser that can render the html or have an http server to host it out.
-* you need to access nodes.json over http. this can be at localhost or served out.
+1. how to use git
+<br>
+2. how to run a binary and/or add it to your path
+<br>
+3. you know how to run a node app
+<br>
+4. you have a browser that can render the html or have an http server to host it out.
+<br>
+5. you need to access nodes.json over http. this can be at localhost or served out.
 
 # send (cli)
 send commands to  remote machines with golang
