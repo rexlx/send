@@ -44,6 +44,24 @@ depending on whether or not you're using serve as the http server, you will have
 2. send.log -> logs what the send binary was sent, and whether or not it was able to connect, unless otherwise specified, it lives in the working directory of node/send.js
 3. serve.log -> logs incoming http requests, unless specified otherwise, lives in the ./ dir it was called
 
+# send (api)
+the node app send.js is configured to listen on "http://192.168.1.45:3000/send" for a post containing the follwing data (json):
+```bash
+let command = {
+  "cmd": "uptime",
+  "user": "rxlx",
+  "host": null,
+  "timeout": "120",
+  "ordered": false
+}
+```
+1. create a list/array of commands, and join them with ";", pass that to the "cmd" key (or just a single command, whatevs)
+2. create a list of hosts, join with " " (whitespace), pass that to the "host" key
+3. configure other values as needed
+4. tail the logs to troubleshoot
+
+using this in your program, you're probably going to something like the following:
+
 # send (cli)
 send commands to  remote machines with golang
 ```bash
