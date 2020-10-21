@@ -12,13 +12,6 @@ the web app is for the person who just needs to perform some tasks as needed
 
 # Packaging
 as this project continues to grow, I aim to make packaging easier and easier. right now I assume you know a few things:
-<br>
-1. how to use git
-2. how to run a binary and/or add it to your path
-3. you know how to run a node app
-4. you have a browser that can render the html or have an http server to host it out.
-5. you need to access nodes.json over http. this can be at localhost or served out.
-
 
 ![example](https://storage.googleapis.com/rfitzhugh/send01.png)
 
@@ -46,7 +39,7 @@ depending on whether or not you're using serve as the http server, you will have
 
 # send (api)
 the node app send.js is configured to listen on "http://ADDR_HERE:3000/send" for a post containing the follwing data (json):
-```bash
+```javascript
 let command = {
   "cmd": "uptime",
   "user": "rxlx",
@@ -57,10 +50,12 @@ let command = {
 ```
 <br>
 using this in your program, you're probably going to something like the following:
-1. create a list/array of commands, and join them with ";", pass that to the "cmd" key (or just a single command, whatevs)
-2. create a list of hosts, join with " " (whitespace), pass that to the "host" key
-3. configure other values as needed
-4. tail the logs to troubleshoot
+<br>
+* how to use git
+* how to run a binary and/or add it to your path
+* you know how to run a node app
+* you have a browser that can render the html or have an http server to host it out.
+* you need to access nodes.json over http. this can be at localhost or served out.
 
 # send (cli)
 send commands to  remote machines with golang
