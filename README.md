@@ -55,12 +55,12 @@ let command = {
   "ordered": false
 }
 ```
+<br>
+using this in your program, you're probably going to something like the following:
 1. create a list/array of commands, and join them with ";", pass that to the "cmd" key (or just a single command, whatevs)
 2. create a list of hosts, join with " " (whitespace), pass that to the "host" key
 3. configure other values as needed
 4. tail the logs to troubleshoot
-
-using this in your program, you're probably going to something like the following:
 
 # send (cli)
 send commands to  remote machines with golang
