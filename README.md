@@ -18,7 +18,6 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 3. you know how to run a node app
 4. you have a browser that can render the html or have an http server to host it out.
 5. you need to access nodes.json over http. this can be at localhost or served out.
-<br>
 
 
 ![example]
