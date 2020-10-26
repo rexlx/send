@@ -24,7 +24,7 @@ func check(e error) {
 	}
 }
 
-var help_msg string = `
+var helpMsg string = `
 send remote commands over ssh. works on MS or Linux (need to compile for both)
 for now password authentication is NOT supported, ssh key only
 
@@ -155,23 +155,23 @@ func executeCmd(cmd, host, port string, args map[string]string, conf *ssh.Client
 	info := fmt.Sprintf("attempting to connect to %v on port %v as %v\n", host, port, conf.User)
 	logit(info, args["logfile"])
 	// dial the host
-	conn, conn_err := ssh.Dial("tcp", fmt.Sprintf("%s:%v", host, port), conf)
-	if conn_err != nil {
+	conn, connErr := ssh.Dial("tcp", fmt.Sprintf("%s:%v", host, port), conf)
+	if connErr != nil {
 		// here we manually handle the err instead of passing it to
 		// check(). we want to know why and log it
 		fmt.Printf("got a connection error (dial) in executeCmd!\n")
-		conn_err_msg := fmt.Sprintf("error connecting to %v on port %v as %v\n", host, port, conf.User)
-		logit(conn_err_msg, args["logfile"])
-		return conn_err_msg
+		connErrMsg := fmt.Sprintf("error connecting to %v on port %v as %v\n", host, port, conf.User)
+		logit(connErrMsg, args["logfile"])
+		return connErrMsg
 	}
 	// create the ssh session
-	session, session_err := conn.NewSession()
-	if session_err != nil {
+	session, sessionErr := conn.NewSession()
+	if sessionErr != nil {
 		// again, we manually handle the err
 		fmt.Printf("got a session error in executeCmd!\n")
-		ses_err_msg := fmt.Sprintf("error connecting to %v on port %v as %v\n", host, port, conf.User)
-		logit(ses_err_msg, args["logfile"])
-		return ses_err_msg
+		sesErrMsg := fmt.Sprintf("error connecting to %v on port %v as %v\n", host, port, conf.User)
+		logit(sesErrMsg, args["logfile"])
+		return sesErrMsg
 	}
 	// wait to close
 	defer session.Close()
@@ -196,16 +196,16 @@ func executeCmd(cmd, host, port string, args map[string]string, conf *ssh.Client
 
 func main() {
 	// not pleased with the flags package, just going to parse args
-	raw_args := os.Args
+	rawArgs := os.Args
 	// the args will be accessed from a map
 	args := make(map[string]string)
 	// we want the command first and host second
-	if len(raw_args) > 2 {
-		args["cmd"] = raw_args[1]
-		args["host"] = raw_args[2]
-	} else if len(raw_args) == 1 {
-		fmt.Println(help_msg)
-		fmt.Printf("expected two args, got %v\n", len(raw_args)-1)
+	if len(rawArgs) > 2 {
+		args["cmd"] = rawArgs[1]
+		args["host"] = rawArgs[2]
+	} else if len(rawArgs) == 1 {
+		fmt.Println(helpMsg)
+		fmt.Printf("expected two args, got %v\n", len(rawArgs)-1)
 		os.Exit(1)
 	}
 	// define our defaults
@@ -219,34 +219,34 @@ func main() {
 	args["ordered"] = "false"
 	args["file"] = "false"
 	// parse em
-	for i, a := range raw_args[1:] {
+	for i, a := range rawArgs[1:] {
 		if !strings.HasPrefix(a, "-") {
 			continue
 		} else if a == "-h" {
-			fmt.Println(help_msg)
+			fmt.Println(helpMsg)
 			os.Exit(0)
 		} else if a == "-s" {
 			args["silent"] = "true"
 		} else if a == "-u" {
-			args["uname"] = raw_args[i+2]
+			args["uname"] = rawArgs[i+2]
 		} else if a == "-p" {
-			args["port"] = raw_args[i+2]
+			args["port"] = rawArgs[i+2]
 		} else if a == "-k" {
-			args["key"] = raw_args[i+2]
+			args["key"] = rawArgs[i+2]
 		} else if a == "-m" {
-			args["multi"] = raw_args[i+2]
+			args["multi"] = rawArgs[i+2]
 		} else if a == "-t" {
-			args["timeout"] = raw_args[i+2]
+			args["timeout"] = rawArgs[i+2]
 		} else if a == "-l" {
-			args["logfile"] = raw_args[i+2]
+			args["logfile"] = rawArgs[i+2]
 		} else if a == "-o" {
 			args["ordered"] = "true"
 		} else if strings.HasPrefix(a, "--") {
 			continue
 		} else if a == "-f" {
-			args["file"] = raw_args[i+2]
+			args["file"] = rawArgs[i+2]
 		} else {
-			fmt.Println(help_msg)
+			fmt.Println(helpMsg)
 			fmt.Printf("unexpected argument: %v\n", a)
 			os.Exit(1)
 		}
@@ -265,7 +265,7 @@ func main() {
 			args["cmd"] = fmt.Sprintf("ps -eo pcpu,args | sort -rnk1 | head")
 			args["timeout"] = "20"
 		} else {
-			fmt.Println(help_msg)
+			fmt.Println(helpMsg)
 			fmt.Printf("not a recognozed command: %v", args["cmd"])
 			os.Exit(1)
 		}
@@ -317,9 +317,9 @@ func main() {
 	// create a channel to communicate between routines
 	res := make(chan string)
 	// create a timeout condition; 120 seconds or user supplied
-	t, time_out_conversion_err := strconv.Atoi(args["timeout"])
-	if time_out_conversion_err != nil {
-		fmt.Println(help_msg)
+	t, timeOutConvErr := strconv.Atoi(args["timeout"])
+	if timeOutConvErr != nil {
+		fmt.Println(helpMsg)
 		fmt.Println("expected timeout to be a number in seconds (type int)")
 		os.Exit(1)
 	}
