@@ -55,6 +55,7 @@ let command = {
   "ordered": false
 }
 ```
+please see the provided "api.py" for a working example
 <br>
 
 # send (cli)
