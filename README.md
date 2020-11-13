@@ -68,13 +68,14 @@ usage:
 POSIX:
 $ send command host [args]
 
-MS: **NOTE** if you add send.exe to the path, you can use just "send"
+(if you add the exe to the path, send will work fine)
+MS:
 > send.exe command host [args]
 
 specifcy a log name:
 $ send "sudo updatedb" host1 -l logs/some.log
 
-send a commnad to multiple hosts:
+send a command to multiple hosts:
 $ send "df -h" -m "host1 host2 host3"
 
 specify different host names:
@@ -82,6 +83,12 @@ send --list-python -m "rxlx@rxlx rfitz@surx"
 
 send a command to a specific user using a specific key:
 $ send "locate special.xml" user@host -k /path/to/key
+
+send a command to hosts read in from a file with a common username:
+send --top-ten -f test.txt -u rxlx
+
+modify sudoers file
+send --mod-sudo root@surx -x rxlx
 
 arguments:
 -u    user name
@@ -93,9 +100,12 @@ arguments:
 -t    command timeout in seconds (default is 120)
 -l    logfile name (default is send.log)
 -o    execute in order instead of asynchronously
+-x    extra args, pass in additional string
+-F    fatal, return with status code 1 if stderr exists
 
 optional commands:
 --list-python  show cpu usage of all python processes
 --list-perl    show cpu usage of all perl processes
 --top-ten      show top ten processes by cpu
+--mod-sudo     add exception in sudoers (dont forget to pass -x USER)
 ```
