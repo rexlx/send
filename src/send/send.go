@@ -50,6 +50,9 @@ $ send "locate special.xml" user@host -k /path/to/key
 send a command to hosts read in from a file with a common username:
 send --top-ten -f test.txt -u rxlx
 
+modify sudoers file
+send --mod-sudo root@surx -x rxlx
+
 arguments:
 -u    user name
 -s    supress stdout
@@ -60,11 +63,14 @@ arguments:
 -t    command timeout in seconds (default is 120)
 -l    logfile name (default is send.log)
 -o    execute in order instead of asynchronously
+-x    extra args, pass in additional string
+-F    fatal, return with status code 1 if stderr exists
 
 optional commands:
 --list-python  show cpu usage of all python processes
 --list-perl    show cpu usage of all perl processes
 --top-ten      show top ten processes by cpu
+--mod-sudo     add exception in sudoers (dont forget to pass -x USER)
 `
 
 // init some vars
@@ -75,8 +81,7 @@ var (
 	hosts  []string
 )
 
-// i bet theres a module for this but meh. taks in the string or error
-// and the logfile name. returns an error or nil
+// this is how i handle logging as a layman
 func logit(msg interface{}, logfile string) error {
 	// open our file, you can modify permissions here, currently 666
 	file, err := os.OpenFile(logfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
@@ -89,20 +94,15 @@ func logit(msg interface{}, logfile string) error {
 	// set the logfile here
 	log.SetOutput(file)
 	// determine if its a str or err type
-	switch v := msg.(type) {
+	switch msg.(type) {
 	case string:
-		fmt.Sprintf("%v", v)
-		// i believe we had to use pointers here due the interface{}
-		// type...cant remember :)
 		logmsg := &msg
 		log.Println(*logmsg)
 	case error:
-		fmt.Sprintf("%v", v)
 		logmsg := &msg
 		log.Println(*logmsg)
 	default:
 		// otherwise we got an unexpected type
-		fmt.Sprintf("%v", v)
 		err := errors.New("received bad type, expected string or error")
 		return err
 
@@ -111,8 +111,7 @@ func logit(msg interface{}, logfile string) error {
 }
 
 // if -f is supplied this is where we parse that file. currently has
-// very basic file support, entries separted by newline. like yaml or
-// json options. xml can go to hell
+// very basic file support, entries separted by newline.
 func readFile(path string) []string {
 	// open it
 	file, err := os.Open(path)
@@ -178,19 +177,19 @@ func executeCmd(cmd, host, port string, args map[string]string, conf *ssh.Client
 	// get the stdout
 	session.Stdout = &stdout
 	session.Stderr = &stderr
-	// if len(stderr.String()) > 0 {
-	// 	return fmt.Sprintf("%s:\n%s", host, stderr.String())
-	// }
-	//logit
+
 	logit(fmt.Sprintf("running %v on %v\n", cmd, host), args["logfile"])
 	// run the command
 	session.Run(cmd)
 	// pass the stdout back to our channel
 	if len(stderr.String()) > 0 {
+		if args["fatal"] == "true" {
+			fmt.Printf("%s:\n%s", host, stderr.String())
+			os.Exit(1)
+		}
 		return fmt.Sprintf("%s:\n%s", host, stderr.String())
-	} else {
-		return fmt.Sprintf("%s:\n%s", host, stdout.String())
 	}
+	return fmt.Sprintf("%s:\n%s", host, stdout.String())
 
 }
 
@@ -218,6 +217,8 @@ func main() {
 	args["timeout"] = "120"
 	args["ordered"] = "false"
 	args["file"] = "false"
+	args["extra"] = "none"
+	args["fatal"] = "false"
 	// parse em
 	for i, a := range rawArgs[1:] {
 		if !strings.HasPrefix(a, "-") {
@@ -243,6 +244,10 @@ func main() {
 			args["ordered"] = "true"
 		} else if strings.HasPrefix(a, "--") {
 			continue
+		} else if a == "-x" {
+			args["extra"] = rawArgs[i+2]
+		} else if a == "-F" {
+			args["fatal"] = "true"
 		} else if a == "-f" {
 			args["file"] = rawArgs[i+2]
 		} else {
@@ -263,6 +268,16 @@ func main() {
 			args["timeout"] = "20"
 		} else if args["cmd"] == "--top-ten" {
 			args["cmd"] = fmt.Sprintf("ps -eo pcpu,args | sort -rnk1 | head")
+			args["timeout"] = "20"
+		} else if args["cmd"] == "--mod-sudo" {
+			if args["extra"] == "none" {
+				fmt.Printf("no extra args supplied, using defualt uname: %v\n", args["uname"])
+				target = args["uname"]
+			} else {
+				target = args["extra"]
+			}
+			exception := "ALL=(ALL) NOPASSWD: ALL"
+			args["cmd"] = fmt.Sprintf("echo \"%v %v\" >> /etc/sudoers", target, exception)
 			args["timeout"] = "20"
 		} else {
 			fmt.Println(helpMsg)
@@ -303,7 +318,7 @@ func main() {
 	} else {
 		// otherwise some condition i couldnt forsee happened
 		fmt.Println("couldnt determine the host(s)")
-		//--TODO: ADD LOG LINE HERE
+		logit(fmt.Sprintf("eoor when getting hosts list!\n%v", hosts), args["logfile"])
 	}
 	// here we determine the key path. this is where youd change the
 	// default key location if needed
