@@ -16,7 +16,7 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 1. how to use git
 2. how to run a binary and/or add it to your path
 3. you know how to run a node app
-4. you have a browser that can render the html or have an http server to host it out.
+4. you have a browser that can render the html if your're using the frontend side
 5. you need to access nodes.json over http. this can be at localhost or served out.
 <br>
 
