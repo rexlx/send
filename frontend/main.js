@@ -1,6 +1,6 @@
 // edit these ass needed
-const url = "http://192.168.1.45:8080/nodes.json"
-const api = "http://192.168.1.45:3000/send"
+const url = "http://send-svr:8080/nodes.json"
+const api = "http://send-svr:3000/send"
 
 // init some vars to manipulate elsewhere
 let nodes

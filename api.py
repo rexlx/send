@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "http://192.168.1.42:3000/send"
+url = "http://send-svr:3000/send"
 
 my_commands = ["df -h", "uptime", "hostname", "sleep 3", "last"]
 
