@@ -144,7 +144,7 @@ func publicKey(path string) ssh.AuthMethod {
 }
 
 // this is where the command is sent. takes in the command being sent,
-// the remote machine and a port, as well as our arg map....and then of
+// the remote machine and a port, as well as our arg map....and then
 // the ssh key. returns the stdout as str
 func executeCmd(cmd, host, port string, args map[string]string, conf *ssh.ClientConfig) string {
 	// init our stdout
