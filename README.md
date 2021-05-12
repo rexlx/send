@@ -84,8 +84,8 @@ send --list-python -m "rxlx@rxlx rfitz@surx"
 send a command to a specific user using a specific key:
 $ send "locate special.xml" user@host -k /path/to/key
 
-send a command to hosts read in from a file with a common username:
-send --top-ten -f test.txt -u rxlx
+read in hosts from a file with a common username: (sep="\n")
+send --top-ten -f nodes.txt -u rxlx
 
 modify sudoers file
 send --mod-sudo root@surx -x rxlx
