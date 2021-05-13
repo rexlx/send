@@ -225,7 +225,7 @@ func main() {
 	for i, a := range rawArgs[1:] {
 		if !strings.HasPrefix(a, "-") {
 			continue
-		} else if a == "-h" || if a == "-v" {
+		} else if a == "-h" || a == "-v" {
 			fmt.Println(helpMsg)
 			os.Exit(0)
 		} else if a == "-s" {
