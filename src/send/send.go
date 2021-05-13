@@ -71,6 +71,8 @@ optional commands:
 --list-perl    show cpu usage of all perl processes
 --top-ten      show top ten processes by cpu
 --mod-sudo     add exception in sudoers (dont forget to pass -x USER)
+
+version 2.0
 `
 
 // init some vars
@@ -223,7 +225,7 @@ func main() {
 	for i, a := range rawArgs[1:] {
 		if !strings.HasPrefix(a, "-") {
 			continue
-		} else if a == "-h" {
+		} else if a == "-h" || if a == "-v" {
 			fmt.Println(helpMsg)
 			os.Exit(0)
 		} else if a == "-s" {
