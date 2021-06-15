@@ -20,8 +20,6 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 5. you need to access nodes.json over http. this can be at localhost or served out.
 <br>
 
-![example](https://storage.googleapis.com/rfitzhugh/send01.png)
-
 # initial setup
 ## files to modify:
 1. frontend/index.html:
