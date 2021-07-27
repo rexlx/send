@@ -1,5 +1,5 @@
 # What is this?
-Send proxies requests to an endpoint that houses keys to remote nodes. The idea is that a trusted user can send requests to perform tasks without passwords.
+Send, automation with an interface.
 
 ## who is this for?
 everyone.
