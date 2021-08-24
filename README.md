@@ -57,9 +57,9 @@ please see the provided "api.py" for a working example
 <br>
 
 # send (cli)
-send commands to  remote machines with golang
+send commands to remote machines with golang
 ```bash
-send remote commands over ssh. works on MS or Linux (need to compile for both)
+send remote commands over ssh. works on MS or unix-like systems (MS needs to be compiled on an actual MS machine)
 for now password authentication is NOT supported, ssh key only
 
 usage:
