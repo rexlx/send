@@ -1,4 +1,4 @@
-// edit these ass needed
+// edit these as needed
 const url = "http://send-svr:8080/nodes.json"
 const api = "http://send-svr:3000/send"
 
