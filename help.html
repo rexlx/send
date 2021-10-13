@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/> -->
+
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>its stuff</title>
+</head>
+<style>
+    body {
+  background-color: black;
+  }
+
+h1 {
+  color: lightblue;
+  text-align: center;
+  }
+
+p {
+  font-family:'Lucida Console', monospace;
+  color: azure;
+  font-size: 18px;
+  white-space: pre;
+  /* white-space: pre-line; */
+  }
+</style>
+<body>
+    <p>
+send remote commands over ssh.
+
+usage:
+$ send command host [args]
+
+specifcy a log name:
+$ send "sudo updatedb" host1 -l logs/some.log
+
+send a commnad to multiple hosts:
+$ send "df -h" -m "host1 host2 host3"
+
+send a command to a specific user using a specific key:
+$ send "locate special.xml" user@host -k /path/to/key
+
+prepare a cluster for graceful shutdown read in from a file:
+send --allstop -f bin/data/nfm.txt -u bwadmin
+
+modify the sudoers file to give a user super powers:
+send --mod-sudo root@host1 -x user-to-mod
+
+arguments:
+-u    user name
+-s    supress stdout
+-k    specify key path
+-p    ssh port
+-m    multiple hosts: -m "host1 host2 host3"
+-f    read hosts from file separated by newline
+-t    command timeout in seconds (default is 120)
+-l    logfile name (default is send.log)
+-o    execute in order instead of asynchronously
+-x    extra args, pass in additional information (string only)
+-F    fatal; if cmd returns stderr, exit with 1
+
+optional commands:
+--list-sipp     show cpu usage of all sipp processes
+--list-python   show cpu usage of all python processes
+--list-perl     show cpu usage of all perl processes
+--top-ten       show top ten processes by cpu
+--top-mem       show top ten memory hungry procceses
+--mod-sudo      give user super powers
+    </p>
+
+</body>
+</html>
