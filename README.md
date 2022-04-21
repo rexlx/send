@@ -1,8 +1,13 @@
-Send is a an automation tool that works over ssh. It consists of three main components: 1. the send binary (add to your path) 2. the api (will need node and npm) and 3. (if serving out the frontend), an http server (the provided "serve" code / binary is for testing purposes only)
+Send is a an automation tool that works over ssh. It consists of three main components:
+<hr>
+
+1. the send binary (gives you access to the send command if added to your path)
+2. the api (acts as a broker between the frontend and the send backend. requires node/npm)
+3. an http server if serving out json files (the provided "serve" code / binary is for testing purposes only)
 
 # update
-I have added support for central logging to src/send.go but its still not implemented everywhere. support for reading in json configuration also added
-changes to documentation coming.
+I have added support for central logging to src/send.go but its still not implemented everywhere because windows. support for reading in json configuration also added to send. The frontend does not yet have the functionality as it only reads in the target hosts from the json.
+more changes to documentation coming.
 
 # Packaging
 as this project continues to grow, I aim to make packaging easier and easier. right now I assume you know a few things:
@@ -16,7 +21,7 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 # initial setup
 ## files to modify:
 1. frontend/index.html:
-div with id help, modify the address and port to the server hosting the front end, otherwise the help page wont work (you can use the provided bin/serve, an http server written in go.)
+make sure any links to resources are modified or reachable.
 2. frontend/main.js
 const url and api need to reflect your setup, refer to data/nodes.json for an example of how to define your target machines
 3. api/send.js
