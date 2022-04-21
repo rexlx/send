@@ -1,7 +1,7 @@
-Send is a an automation tool that works over ssh. It consists of three main compoennts: 1. the send binary (added to your path) 2. the api (will need node and npm) and 3. (if serving out the frontend), an http server (the provided "serve" code / binary is for testing purposes only)
+Send is a an automation tool that works over ssh. It consists of three main components: 1. the send binary (add to your path) 2. the api (will need node and npm) and 3. (if serving out the frontend), an http server (the provided "serve" code / binary is for testing purposes only)
 
 # update
-I have added support for central loggging to src/send.go but its still not implemented everywhere.
+I have added support for central logging to src/send.go but its still not implemented everywhere. support for reading in json configuration also added
 changes to documentation coming.
 
 # Packaging
