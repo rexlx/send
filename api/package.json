@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "sends commands to the send binary",
     "main": "send.js",
-    "author": "mrrubberburner",
+    "author": "rfitzhugh@outlook.com",
     "license": "MIT",
     "dependencies": {
         "body-parser": "^1.19.0",

@@ -6,8 +6,15 @@ const spawn = require("child_process").spawn  // used to run system commands
 // its common to call express app
 const app = express()
 
-// if you need to change the log name
+// if you need to change the log name / bin path
 const log = "api.log"
+const path = "/home/rxlx/bin/send"
+
+// set up logging for the send binary
+// for remote (or 127.0.0.1) syslog server
+const sendLog = "tcp@192.168.86.42:514"
+// flat file
+//const sendLog = "/path/to/flatfile.txt"
 
 // tell express to use the parser middlewear
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -36,7 +43,15 @@ app.post("/send", (req, res) => {
     // test properties of the body
     command = req.body
     if (command.ordered) {
-        const s = spawn("/home/rxlx/bin/send", [`"${req.body.cmd}"`, `-u ${req.body.user}`, `-m "${req.body.host}"`,`-t ${req.body.timeout}`, `-o`], { shell: true })
+        const s = spawn(path,
+            [`-c "${req.body.cmd}"`,
+            `-log ${sendLog}`,
+            `-user ${req.body.user}`,
+            `-hosts "${req.body.host}"`,
+            `-timeout ${req.body.timeout}`,
+            `-o`],
+            { shell: true }
+            )
                 // stops a single stdout or err from ending the conn
         s.stdout.pipe(res, {end: false})
         s.stderr.pipe(res, {end: false})
@@ -47,7 +62,14 @@ app.post("/send", (req, res) => {
         })
         console.log(command)
     } else {
-        const s = spawn("/home/rxlx/bin/send", [`"${req.body.cmd}"`, `-u ${req.body.user}`, `-m "${req.body.host}"`,`-t ${req.body.timeout}`], { shell: true })
+        const s = spawn(path,
+            [`-c "${req.body.cmd}"`,
+            `-log ${sendLog}`,
+            `-user ${req.body.user}`,
+            `-hosts "${req.body.host}"`,
+            `-timeout ${req.body.timeout}`],
+            { shell: true }
+            )
         // you may see other spawn examples using callback functions, this
         // stops a single stdout or err from ending the conn
         s.stdout.pipe(res, {end: false})

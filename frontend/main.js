@@ -1,4 +1,5 @@
-// edit these as needed
+// edit these as needed (a quick addition to your hosts file will work)
+// this is where we CURRENTLY store json, expect changes.
 const url = "http://send-svr:8080/nodes.json"
 const api = "http://send-svr:3000/send"
 
@@ -13,7 +14,7 @@ let opnEl = document.createElement("option")
 // needed
 let command = {
   "cmd": "uptime",
-  "user": "rxlx",
+  "user": "sadmin",
   "host": null,
   "timeout": "120",
   "ordered": false
