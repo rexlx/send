@@ -1,14 +1,8 @@
-# What is this?
-Send, automation with an interface.
+Send is a an automation tool that works over ssh. It consists of three main compoennts: 1. the send binary (added to your path) 2. the api (will need node and npm) and 3. (if serving out the frontend), an http server (the provided "serve" code / binary is for testing purposes only)
 
-## who is this for?
-everyone.
-<br>
-the cli tool is for the engineer who loves the sound of successive keyboard strokes
-<br>
-the api is for the programmer who knows how to use the tool better than me
-<br>
-the web app is for the person who just needs to perform some tasks as needed
+# update
+I have added support for central loggging to src/send.go but its still not implemented everywhere.
+changes to documentation coming.
 
 # Packaging
 as this project continues to grow, I aim to make packaging easier and easier. right now I assume you know a few things:
@@ -16,8 +10,7 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 1. how to use git
 2. how to run a binary and/or add it to your path
 3. you know how to run a node app
-4. you have a browser that can render the html if your're using the frontend side
-5. you need to access nodes.json over http. this can be at localhost or served out.
+4. install / configure an http server
 <br>
 
 # initial setup
@@ -59,51 +52,28 @@ please see the provided "api.py" for a working example
 # send (cli)
 send commands to remote machines with golang
 ```bash
-send remote commands over ssh. works on MS or unix-like systems (MS needs to be compiled on an actual MS machine)
-for now password authentication is NOT supported, ssh key only
-
-usage:
-POSIX:
-$ send command host [args]
-
-(if you add the exe to the path, send will work fine)
-MS:
-> send.exe command host [args]
-
-specifcy a log name:
-$ send "sudo updatedb" host1 -l logs/some.log
-
-send a command to multiple hosts:
-$ send "df -h" -m "host1 host2 host3"
-
-specify different host names:
-send --list-python -m "rxlx@rxlx rfitz@surx"
-
-send a command to a specific user using a specific key:
-$ send "locate special.xml" user@host -k /path/to/key
-
-read in hosts from a file with a common username: (sep="\n")
-send --top-ten -f nodes.txt -u rxlx
-
-modify sudoers file
-send --mod-sudo root@surx -x rxlx
-
-arguments:
--u    user name
--s    supress stdout
--k    specify key path
--p    ssh port
--m    multiple hosts: -m "host1 host2 host3"
--f    read hosts from file separated by new line
--t    command timeout in seconds (default is 120)
--l    logfile name (default is send.log)
--o    execute in order instead of asynchronously
--x    extra args, pass in additional string
--F    fatal, return with status code 1 if stderr exists
-
-optional commands:
---list-python  show cpu usage of all python processes
---list-perl    show cpu usage of all perl processes
---top-ten      show top ten processes by cpu
---mod-sudo     add exception in sudoers (dont forget to pass -x USER)
+rxlx ~ $ send -h
+Usage of send:
+  -c string
+    	specify command
+  -conf string
+    	json config location
+  -fatal
+    	return failed exit codes
+  -file string
+    	specify a file separated by newline
+  -hosts string
+    	multiple hosts inside quotes
+  -key string
+    	path to key if not default
+  -log PROTO@ADDR:PORT
+    	for flat file: /path/name.ext, syslog: PROTO@ADDR:PORT
+  -ordered
+    	run in order instead of async
+  -port int
+    	port number (default 22)
+  -timeout int
+    	timeout in seconds (default 90)
+  -user string
+    	username
 ```
