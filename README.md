@@ -7,7 +7,8 @@ Send is a an automation tool that works over ssh. It consists of three main comp
 
 # update
 I have added support for central logging to src/send.go but its still not implemented everywhere because windows. support for reading in json configuration also added to send. The frontend does not yet have the functionality as it only reads in the target hosts from the json.
-more changes to documentation coming.
+
+*THIS can be compiled for windows, you just have to drop support for rsyslog*
 
 # Packaging
 as this project continues to grow, I aim to make packaging easier and easier. right now I assume you know a few things:
