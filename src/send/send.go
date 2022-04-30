@@ -62,7 +62,7 @@ func main() {
 
 	logHandler(cfg.LogPath)
 	// log for records should this be DEBUG?
-	log.Printf("%v |-> using the following config |-> %v\n", "__MAIN__", cfg)
+	log.Printf("%v |-> using the following config |-> %v\n", "__SEND__", cfg)
 	// hosts should be supplied like -host "host1 user2@host2 roooooot@topCkid"
 	for _, host := range strings.Split(cfg.Hosts, " ") {
 		// if they added a username@host, disregard c.User
