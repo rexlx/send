@@ -33,8 +33,7 @@ var (
 	cfg      Config
 )
 
-// since we except either a config file or CLI args, I pack everything into
-// the same stuct that i unmarshall the config file to.
+// Config gets datafilled by either 1. cli args, or 2. a specified json config
 type Config struct {
 	User     string `json:"user"`
 	Key      string `json:"key"`
