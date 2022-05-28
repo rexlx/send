@@ -1,7 +1,7 @@
 // edit these as needed (a quick addition to your hosts file will work)
 // this is where we CURRENTLY store json, expect changes.
-const url = "http://send-api:3000/data/nodes.json"
-const api = "http://send-api:3000/send"
+const url = "http://rhel.com:3003/data/nodes.json"
+const api = "http://rhel.com:3003/send"
 
 // init some vars to manipulate elsewhere
 let nodes
