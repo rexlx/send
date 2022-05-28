@@ -24,12 +24,13 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 3. if you're running the api, it needs to know the path as well
 
 # send (api)
-the node app send.js is configured to listen on "http://ADDR_HERE:3000/send" for a post containing the follwing data (json):
+this is what the api expects. the values serve as examples, but the keys matter.
 ```javascript
 let command = {
   "cmd": "uptime",
-  "user": "rxlx",
+  "user": "sadmin",
   "host": null,
+  "port": 22,
   "timeout": "120",
   "ordered": false
 }
