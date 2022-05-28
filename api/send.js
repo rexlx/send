@@ -1,5 +1,6 @@
 const express = require("express")
 const fs = require("fs")
+const cors = require("cors")
 const path = require("path")
 const bodyParser = require("body-parser")
 const config = require("config")
@@ -15,24 +16,20 @@ const fatal = config.get("send.fatal")
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(cors())
+app.use("/data", express.static(path.join(__dirname, "data")))
 
 // add our options method
-app.options("/send", (req, res) => {
-    // this is to stop that cors jazz
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Method", "*")
-    res.header("Access-Control-Allow-Headers", "*")
-    res.end()
-})
-
-app.use("/data", express.static(path.join(__dirname, "data")))
+// app.options("/send", (req, res) => {
+//     // this is to stop that cors jazz
+//     res.header("Access-Control-Allow-Origin", "*")
+//     res.header("Access-Control-Allow-Method", "*")
+//     res.header("Access-Control-Allow-Headers", "*")
+//     res.end()
+// })
 
 // add our post method
 app.post("/send", (req, res) => {
-    // again with the cors
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Method", "*")
-    res.header("Access-Control-Allow-Headers", "*")
     // validate the incoming json
     if (Object.keys(req.body).length < 4) {
         res.status(400)
