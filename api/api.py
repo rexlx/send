@@ -9,17 +9,16 @@ command = {
   "cmd": ";".join(my_commands),
   "user": "rxlx",
   "host": "svr",
+  "port": 22,
   "timeout": "120",
   "ordered": "false"
 }
 
 headers = {'content-type': 'application/json'}
 
-cmd = json.dumps(command)
-res = requests.post(url, data=cmd, headers=headers)
-
-if res.status_code == 200:
-    print(res.text)
-else:
-    print(f"requst sent, but i got the response: {res.status_code}")
-    print(res.text)
+try:
+  cmd = json.dumps(command)
+  res = requests.post(url, data=cmd, headers=headers)
+  print(f"request sent...got a {res.status_code}")
+except Exception as e:
+  print(f"encountered an error! {e}")

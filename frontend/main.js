@@ -1,7 +1,7 @@
 // edit these as needed (a quick addition to your hosts file will work)
 // this is where we CURRENTLY store json, expect changes.
-const url = "http://send-svr:8080/nodes.json"
-const api = "http://send-svr:3000/send"
+const url = "http://send-api:3000/data/nodes.json"
+const api = "http://send-api:3000/send"
 
 // init some vars to manipulate elsewhere
 let nodes
@@ -9,22 +9,16 @@ let svr
 let nodeList
 let opnEl = document.createElement("option")
 
-// technically this is an object but it will converted to json later
-// consider these default vals that are tested for and manipulated as
-// needed
 let command = {
   "cmd": "uptime",
   "user": "sadmin",
   "host": null,
+  "port": 22,
   "timeout": "120",
   "ordered": false
 }
 
-// this function simply gets the nodes.json which is passed to the drop
-// down menu. these are effectively different groups of servers
 const getNodes = async (url) => {
-  // this is a common way to use the fetch api (http methods) with out
-  // blocking the program
   let res = await fetch(url)
   if (res.status === 200) {
     const data = await res.json()
@@ -35,7 +29,7 @@ const getNodes = async (url) => {
   }
 }
 
-// here create the function that sends the command
+// function that sends the command
 const sendCmd = async (api, data) => {
   let res = await fetch(api, {
     method: "POST",

@@ -23,13 +23,13 @@ var (
 	hosts    = flag.String("hosts", "", "multiple hosts inside quotes")
 	fromFile = flag.String("file", "", "specify a file separated by newline")
 	logPath  = flag.String("log", "", "for flat file: /path/name.ext, syslog: `PROTO@ADDR:PORT`")
+	uniq     = flag.String("uniq", "_SEND_", "a unique string")
 	timeout  = flag.Int("timeout", 90, "timeout in seconds")
 	port     = flag.Int("port", 22, "port number")
 	fatal    = flag.Bool("fatal", false, "return failed exit codes")
 	ordered  = flag.Bool("ordered", false, "run in order instead of async")
 	usr      string
 	dest     string
-	sshCfg   string
 	cfg      Config
 )
 
@@ -58,10 +58,22 @@ func main() {
 	} else {
 		configFromArgs(&cfg)
 	}
-
-	logHandler(cfg.LogPath)
+	if strings.Contains(cfg.LogPath, "@") {
+		addr := strings.Split(cfg.LogPath, "@")
+		logger, e := syslog.Dial(addr[0], addr[1],
+			syslog.LOG_WARNING|syslog.LOG_DAEMON, *uniq) // anything else here
+		check(e)
+		log.SetOutput(logger)
+	} else {
+		// otherwise user supplied a path (or fat fingered something)
+		// -log /path/to/flatFile.txt
+		logger, e := os.OpenFile(cfg.LogPath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		check(e)
+		defer logger.Close()
+		log.SetOutput(logger)
+	}
 	// log for records should this be DEBUG?
-	log.Printf("%v |-> using the following config |-> %v\n", "__SEND__", cfg)
+	log.Printf("%v -> using the following config | %v", *uniq, cfg)
 	// hosts should be supplied like -host "host1 user2@host2 roooooot@topCkid"
 	for _, host := range strings.Split(cfg.Hosts, " ") {
 		// if they added a username@host, disregard c.User
@@ -87,7 +99,7 @@ func main() {
 			case results := <-response:
 				fmt.Println(results)
 			case <-time.After(time.Duration(cfg.Timeout) * time.Second):
-				log.Printf("__TIMEOUT__ |-> %v timed out; timeout: %v", dest, cfg.Timeout)
+				log.Printf("TIMEOUT -> %v timed out; timeout: %v", dest, cfg.Timeout)
 				return
 			}
 		}
@@ -106,9 +118,9 @@ func sendCmd(c *Config, usr, dest string) string {
 	}
 	conn, err := ssh.Dial("tcp", fmt.Sprintf("%s:%v", dest, cfg.Port), sshConf)
 	if err != nil {
-		fmt.Printf("error when attempting to dial %v as user: %v!\n%v\n", dest, usr, err)
-		connErrMsg := fmt.Sprintf("error connecting to %v on port %v as %v\n", dest, cfg.Port, usr)
-		log.Println(connErrMsg, err)
+		connErrMsg := fmt.Sprintf("error connecting to %v on port %v as %v: %v", dest, cfg.Port, usr, err)
+		fmt.Println(connErrMsg)
+		log.Println(connErrMsg)
 	}
 	session, sessionErr := conn.NewSession()
 	if sessionErr != nil {
@@ -129,34 +141,15 @@ func sendCmd(c *Config, usr, dest string) string {
 		// whether we care or not is determined here. If set to fatal,
 		// any stderr returned will terminate the program and return failed (os exit 1)
 		if cfg.Fatal {
-			fmt.Printf("Cant recover, fatal set to true. host affected: %v |->%v\n", dest, stderr.String())
-			log.Printf("Cant recover, fatal set to true. host affected: %v |->%v\n", dest, stderr.String())
+			fmt.Printf("Cant recover, fatal set to true. host affected: %v ->%v\n", dest, stderr.String())
+			log.Printf("Cant recover, fatal set to true. host affected: %v ->%v", dest, stderr.String())
 			os.Exit(1)
 		}
 		// otherwise tell us what failed and carry on with work
-		log.Printf("__FAIL__ |-> command failed on %v->%v", dest, stderr.String())
+		log.Printf("FAILED -> command failed on %v: %v", dest, stderr.String())
 		return fmt.Sprintf("%v", stderr.String())
 	}
 	return fmt.Sprintf("%v", stdout.String())
-}
-
-func logHandler(logPath string) {
-	// if the user supplies (what we define as a) syslog path, unpack
-	// -log tcp@hostname:port | -log udp@addr:port
-	if strings.Contains(logPath, "@") {
-		addr := strings.Split(logPath, "@")
-		logger, e := syslog.Dial(addr[0], addr[1],
-			syslog.LOG_WARNING|syslog.LOG_DAEMON, "__SEND__") // anything else here
-		check(e)
-		log.SetOutput((logger))
-	} else {
-		// otherwise user supplied a path (or fat fingered something)
-		// -log /path/to/flatFile.txt
-		logger, e := os.OpenFile(logPath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-		check(e)
-		defer logger.Close()
-		log.SetOutput(logger)
-	}
 }
 
 func configFromJSON(conf string) {
@@ -209,7 +202,7 @@ func configFromArgs(c *Config) {
 
 func check(e error) {
 	if e != nil {
-		log.Fatalf("send encountered an error!\t%+v\n", e)
+		log.Fatalf("send encountered an error!\t%+v", e)
 	}
 }
 
@@ -226,5 +219,4 @@ func loadKey(path string) ssh.AuthMethod {
 	key, err := ssh.ParsePrivateKey(contents)
 	check(err)
 	return ssh.PublicKeys(key)
-	// c.Auth = ssh.PublicKeys(key)
 }

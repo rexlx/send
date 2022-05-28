@@ -1,0 +1,12 @@
+{
+    "api": {
+        "log": "$HOME/send_api.log",
+        "sendBinary": "$HOME/bin/send"
+    },
+    "send": {
+        "log": "tcp@192.168.86.41:514",
+        "key": "$HOME/.ssh/id_rsa",
+        "unique": "mySpecialProcess",
+        "fatal": false
+    }
+}

@@ -1,22 +1,18 @@
-const express = require("express")             // express router
-const fs = require("fs")                       // used to write the log
-const bodyParser = require("body-parser")      // parses json
-const spawn = require("child_process").spawn  // used to run system commands
+const express = require("express")
+const fs = require("fs")
+const path = require("path")
+const bodyParser = require("body-parser")
+const config = require("config")
+const spawn = require("child_process").spawn
 
-// its common to call express app
+const log = config.get("api.log")
+const sendLog = config.get("send.log")
+const sendPath = config.get("api.sendBinary")
+const key = config.get("send.key")
+const uniq = config.get("send.unique")
+const fatal = config.get("send.fatal")
+
 const app = express()
-
-// if you need to change the log name / bin path
-const log = "api.log"
-const path = "/home/rxlx/bin/send"
-
-// set up logging for the send binary
-// for remote (or 127.0.0.1) syslog server
-const sendLog = "tcp@192.168.86.42:514"
-// flat file
-//const sendLog = "/path/to/flatfile.txt"
-
-// tell express to use the parser middlewear
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -28,6 +24,8 @@ app.options("/send", (req, res) => {
     res.header("Access-Control-Allow-Headers", "*")
     res.end()
 })
+
+app.use("/data", express.static(path.join(__dirname, "data")))
 
 // add our post method
 app.post("/send", (req, res) => {
@@ -43,30 +41,31 @@ app.post("/send", (req, res) => {
     // test properties of the body
     command = req.body
     if (command.ordered) {
-        const s = spawn(path,
+        const s = spawn(sendPath,
             [`-c "${req.body.cmd}"`,
             `-log ${sendLog}`,
             `-user ${req.body.user}`,
             `-hosts "${req.body.host}"`,
+            `-port "${req.body.port}"`,
             `-timeout ${req.body.timeout}`,
-            `-o`],
+            `-ordered`],
             { shell: true }
             )
-                // stops a single stdout or err from ending the conn
+        // stops a single stdout or err from ending the conn
         s.stdout.pipe(res, {end: false})
         s.stderr.pipe(res, {end: false})
-
         // its now safe to end
         s.on('close', () => {
             res.end()
         })
         console.log(command)
     } else {
-        const s = spawn(path,
+        const s = spawn(sendPath,
             [`-c "${req.body.cmd}"`,
             `-log ${sendLog}`,
             `-user ${req.body.user}`,
             `-hosts "${req.body.host}"`,
+            `-port "${req.body.port}"`
             `-timeout ${req.body.timeout}`],
             { shell: true }
             )
@@ -84,7 +83,7 @@ app.post("/send", (req, res) => {
 
     let date = new Date()
     // log request
-    let msg = `${date}\n  $ ${req.body.cmd} as ${req.body.user} on ${req.body.host}\n`
+    let msg = `${date}-> running ${req.body.cmd} as ${req.body.user} on ${req.body.host}:"${req.body.port}`
     fs.appendFile(log, msg, (e) => {
         if (e) throw e
     })

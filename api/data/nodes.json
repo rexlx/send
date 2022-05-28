@@ -1,0 +1,12 @@
+{
+    "home": [
+        "host1",
+        "host2"
+    ],
+    "gcp": [
+        "host1",
+        "host2",
+	"host3",
+        "host4"
+    ]
+}
