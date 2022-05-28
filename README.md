@@ -41,7 +41,6 @@ please see the provided "api.py" for a working example
 # send (cli)
 send commands to remote machines with golang
 ```bash
-rxlx ~ $ send -h
 Usage of send:
   -c string
     	specify command
@@ -63,6 +62,8 @@ Usage of send:
     	port number (default 22)
   -timeout int
     	timeout in seconds (default 90)
+  -uniq string
+    	a unique string (default "_SEND_")
   -user string
     	username
 ```
