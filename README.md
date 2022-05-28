@@ -2,44 +2,26 @@ Send is a an automation tool that works over ssh. It consists of three main comp
 <hr>
 
 1. the send binary (gives you access to the send command if added to your path)
-2. the api (acts as a broker between the frontend and the send backend. requires node/npm)
-3. an http server if serving out json files (the provided "serve" code / binary is for testing purposes only)
-
-# update
-I have added support for central logging to src/send.go but its still not implemented everywhere because windows. support for reading in json configuration also added to send. The frontend does not yet have the functionality as it only reads in the target hosts from the json.
-
-*THIS can be compiled for windows, you just have to drop support for rsyslog*
+2. the api (acts as a broker between the http interface and the send binary. requires node/npm)
+3. the http interface 
 
 # Packaging
 as this project continues to grow, I aim to make packaging easier and easier. right now I assume you know a few things:
 <br>
-1. how to use git
-2. how to run a binary and/or add it to your path
-3. you know how to run a node app
-4. install / configure an http server
+1. how to use git to clone the repository
+2. how to install packages on your operating system (go, node, and npm in this case)
 <br>
 
 # initial setup
 ## files to modify:
-1. frontend/index.html:
-make sure any links to resources are modified or reachable.
-2. frontend/main.js
-const url and api need to reflect your setup, refer to data/nodes.json for an example of how to define your target machines
-3. api/send.js
-both const s = spawn() needs to know the actual path to your send binary (this is the tool that sends commands over ssh)
-you may want to specify const log (cuurently ./api.log)
+1. send/api/config/default.json contains information that node will use during runtime. the api section is used for api configuration, such as logging path, and the location of the send binary. the send section contains information pertinent the send configuration which the end user cant control. Like which key they can use and where send logs to.
+2. send/api/data/nodes.json is where the http interface looks when it populates the dropdown
+3. send/frontend/* is where you can modify the stylesheet/html and make any required configuration changes to index.html and main.js
 
 ## additional config
 1. send is a passwordless application, ssh keys must be traded with all target machines
-2. i allow * in my cors policy, this may not be desirable to you, and if you understand what this message means, you know how to fix it...i think
-3. while api/send.js should run fine, you should remove node_modules and npm install.
-4. you'll probably want to change the default user in frontend/main.js, as i doubt you also use the *rxlx* username :)
-
-## troubleshooting
-depending on whether or not you're using serve as the http server, you will have 2-3 logs to troubleshoot from
-1. api.log -> logs what request it recieved and when, written by node/send.js
-2. send.log -> logs what the send binary was sent, and whether or not it was able to connect, unless otherwise specified, it lives in the working directory of node/send.js
-3. serve.log -> logs incoming http requests, unless specified otherwise, lives in the ./ dir it was called
+2. once compiled, send will need to be added to your path.
+3. if you're running the api, it needs to know the path as well
 
 # send (api)
 the node app send.js is configured to listen on "http://ADDR_HERE:3000/send" for a post containing the follwing data (json):
