@@ -62,7 +62,7 @@ app.post("/send", (req, res) => {
             `-log ${sendLog}`,
             `-user ${req.body.user}`,
             `-hosts "${req.body.host}"`,
-            `-port "${req.body.port}"`
+            `-port "${req.body.port}"`,
             `-timeout ${req.body.timeout}`],
             { shell: true }
             )
