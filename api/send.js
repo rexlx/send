@@ -65,9 +65,9 @@ app.post("/send", (req, res) => {
             `-user ${req.body.user}`,
             `-hosts "${req.body.host}"`,
             `-port "${req.body.port}"`,
-            `-timeout ${req.body.timeout}`],
+            `-timeout ${req.body.timeout}`,
             `-key ${key}`,
-            `-uniq ${uniq}`,
+            `-uniq ${uniq}`],
             { shell: true }
             )
         // you may see other spawn examples using callback functions, this
