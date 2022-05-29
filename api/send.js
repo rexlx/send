@@ -74,7 +74,7 @@ app.post("/send", (req, res) => {
 
     let date = new Date()
     // log request
-    let msg = `${date} ${uniq} RUNNING -> ${req.body.cmd} as ${req.body.user} on ${req.body.host}:"${req.body.port}\n`
+    let msg = `${date} ${uniq} RUNNING -> ${req.body.cmd} as ${req.body.user} on ${req.body.host}:${req.body.port}\n`
     fs.appendFile(log, msg, (e) => {
         if (e) throw e
     })
