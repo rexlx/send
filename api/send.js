@@ -9,6 +9,7 @@ const spawn = require("child_process").spawn
 const log = config.get("api.log")
 const sendLog = config.get("send.log")
 const sendPath = config.get("api.sendBinary")
+const apiPort = config.get("api.port")
 const key = config.get("send.key")
 const uniq = config.get("send.unique")
 const fatal = config.get("send.fatal")
@@ -91,6 +92,6 @@ app.post("/send", (req, res) => {
 })
 
 
-app.listen(3000, () => {
+app.listen(apiPort, () => {
 
 })

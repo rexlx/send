@@ -1,6 +1,7 @@
 {
     "api": {
         "log": "/home/your_user_here/send_api.log",
+        "port": 3003,
         "sendBinary": "/home/your_user_here/bin/send"
     },
     "send": {
