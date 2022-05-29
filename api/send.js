@@ -20,16 +20,7 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use("/data", express.static(path.join(__dirname, "data")))
 
-// add our options method
-// app.options("/send", (req, res) => {
-//     // this is to stop that cors jazz
-//     res.header("Access-Control-Allow-Origin", "*")
-//     res.header("Access-Control-Allow-Method", "*")
-//     res.header("Access-Control-Allow-Headers", "*")
-//     res.end()
-// })
 
-// add our post method
 app.post("/send", (req, res) => {
     // validate the incoming json
     if (Object.keys(req.body).length < 4) {
@@ -58,7 +49,6 @@ app.post("/send", (req, res) => {
         s.on('close', () => {
             res.end()
         })
-        console.log(command)
     } else {
         const s = spawn(sendPath,
             [`-c "${req.body.cmd}"`,
@@ -81,11 +71,10 @@ app.post("/send", (req, res) => {
             res.end()
         })
         }
-        // console.log(command)
 
     let date = new Date()
     // log request
-    let msg = `${date}-> running ${req.body.cmd} as ${req.body.user} on ${req.body.host}:"${req.body.port}`
+    let msg = `${date} ${uniq} RUNNING -> ${req.body.cmd} as ${req.body.user} on ${req.body.host}:"${req.body.port}`
     fs.appendFile(log, msg, (e) => {
         if (e) throw e
     })

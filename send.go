@@ -99,7 +99,7 @@ func main() {
 			case results := <-response:
 				fmt.Println(results)
 			case <-time.After(time.Duration(cfg.Timeout) * time.Second):
-				log.Printf("TIMEOUT -> %v timed out; timeout: %v", dest, cfg.Timeout)
+				log.Printf("%v: TIMEOUT -> %v timed out; timeout: %v", *uniq, dest, cfg.Timeout)
 				return
 			}
 		}
@@ -120,13 +120,13 @@ func sendCmd(c *Config, usr, dest string) string {
 	if err != nil {
 		connErrMsg := fmt.Sprintf("error connecting to %v on port %v as %v: %v", dest, cfg.Port, usr, err)
 		fmt.Println(connErrMsg)
-		log.Println(connErrMsg)
+		log.Println(*uniq, connErrMsg)
 	}
 	session, sessionErr := conn.NewSession()
 	if sessionErr != nil {
 		// TODO: need to add silent mode for procs running in BG
 		fmt.Printf("session error! with %v on %v as user %v\n", dest, cfg.Port, usr)
-		log.Printf("session error! with %v on %v as user %v\n", dest, cfg.Port, usr)
+		log.Printf("%v: session error! with %v on %v as user %v\n", *uniq, dest, cfg.Port, usr)
 	}
 	defer session.Close()
 
@@ -134,7 +134,7 @@ func sendCmd(c *Config, usr, dest string) string {
 	session.Stdout = &stdout
 	session.Stderr = &stderr
 	// log what we did for our records
-	log.Printf("running %v on %v as user %v", cfg.Command, dest, usr)
+	log.Printf("%v: RUNNING -> %v on %v as user %v", *uniq, cfg.Command, dest, usr)
 	session.Run(cfg.Command)
 	// if there was stderr, something went wrong
 	if len(stderr.String()) > 0 {
@@ -146,10 +146,10 @@ func sendCmd(c *Config, usr, dest string) string {
 			os.Exit(1)
 		}
 		// otherwise tell us what failed and carry on with work
-		log.Printf("FAILED -> command failed on %v: %v", dest, stderr.String())
-		return fmt.Sprintf("%v", stderr.String())
+		log.Printf("%v: FAILED -> command failed on %v: %v", *uniq, dest, stderr.String())
+		return fmt.Sprintf("%v\n%v", dest, stderr.String())
 	}
-	return fmt.Sprintf("%v", stdout.String())
+	return fmt.Sprintf("%v\n%v", dest, stdout.String())
 }
 
 func configFromJSON(conf string) {
