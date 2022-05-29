@@ -14,7 +14,7 @@ as this project continues to grow, I aim to make packaging easier and easier. ri
 
 # initial setup
 ## files to modify:
-1. send/api/config/default.json contains information that node will use during runtime. the api section is used for api configuration, such as logging path, and the location of the send binary. the send section contains information pertinent the send configuration which the end user cant control. Like which key they can use and where send logs to.
+1. send/api/config/default.json contains information that node will use during runtime. the api section is used for api configuration, such as logging path, and the location of the send binary. the send section contains information pertinent to the send configuration which the end user cant control, like which key they can use and where to send logs to.
 2. send/api/data/nodes.json is where the http interface looks when it populates the dropdown
 3. send/frontend/* is where you can modify the stylesheet/html and make any required configuration changes to index.html and main.js
 
