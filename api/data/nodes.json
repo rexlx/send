@@ -1,12 +1,18 @@
 {
-    "home": [
-        "host1",
-        "host2"
+    "homestack": [
+        "fedora",
+        "debian",
+	    "rhel",
+	    "surx"
     ],
-    "gcp": [
-        "host1",
-        "host2",
-	"host3",
-        "host4"
+    "fake-paas-gcp": [
+        "rxlx",
+        "mdb1",
+	    "mdb2",
+        "mdb3"
+    ],
+    "you-get": [
+	    "the",
+	    "idea"
     ]
 }
