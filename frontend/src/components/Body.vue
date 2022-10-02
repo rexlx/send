@@ -2,7 +2,7 @@
     <div v-if="store.token !== ''" class="container">
         <div class="row">
             <div class="col">
-                <img alt="bookNshib" :src="`${bucket}/stock8.jpg`" class="img-fluid mt-5">
+                <img alt="bookNshib" :src="`${bucket}/stock9.jpg`" class="img-fluid mt-5">
             </div>
         </div>
         <div class="row">
