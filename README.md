@@ -1,4 +1,4 @@
-This is mostly a place for me to play around with vue. That said, I'd still like to post some screenshots and instructions in the event anyone happens upon this repo. Until then, I'm going to assume you know / have a few things.
+This is mostly a place for me to play around with vue. I repurposed the application taught in [this](https://www.udemy.com/course/working-with-vue-3-and-go/) course (which i'm still working my way through :)) ). That said, I'd still like to post some screenshots and instructions in the event anyone happens upon this repo. Until then, I'm going to assume you know / have a few things.
 
 1. you will need [go](https://go.dev/doc/install) and [node](https://nodejs.org/en/download/)/npm installed.
 2. you know how to run code in general (in this case, compiling go and running the vue frontend.)
