@@ -103,6 +103,43 @@ ALTER SEQUENCE public.replies_id_seq OWNED BY public.replies.id;
 
 
 --
+-- Name: saved_commands; Type: TABLE; Schema: public; Owner: mothman
+--
+
+CREATE TABLE public.saved_commands (
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    user_id integer NOT NULL,
+    command character varying(255),
+    name character varying(255) DEFAULT 'none'::character varying NOT NULL
+);
+
+
+ALTER TABLE public.saved_commands OWNER TO mothman;
+
+--
+-- Name: saved_commands_id_seq; Type: SEQUENCE; Schema: public; Owner: mothman
+--
+
+CREATE SEQUENCE public.saved_commands_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.saved_commands_id_seq OWNER TO mothman;
+
+--
+-- Name: saved_commands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mothman
+--
+
+ALTER SEQUENCE public.saved_commands_id_seq OWNED BY public.saved_commands.id;
+
+
+--
 -- Name: targets; Type: TABLE; Schema: public; Owner: mothman
 --
 
@@ -197,7 +234,7 @@ CREATE TABLE public.users (
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     updated_at timestamp without time zone DEFAULT now() NOT NULL,
     user_active integer DEFAULT 0 NOT NULL,
-    settings json
+    settings jsonb
 );
 
 
@@ -240,6 +277,13 @@ ALTER TABLE ONLY public.replies ALTER COLUMN id SET DEFAULT nextval('public.repl
 
 
 --
+-- Name: saved_commands id; Type: DEFAULT; Schema: public; Owner: mothman
+--
+
+ALTER TABLE ONLY public.saved_commands ALTER COLUMN id SET DEFAULT nextval('public.saved_commands_id_seq'::regclass);
+
+
+--
 -- Name: targets id; Type: DEFAULT; Schema: public; Owner: mothman
 --
 
@@ -277,6 +321,14 @@ ALTER TABLE ONLY public.replies
 
 
 --
+-- Name: saved_commands saved_commands_pkey; Type: CONSTRAINT; Schema: public; Owner: mothman
+--
+
+ALTER TABLE ONLY public.saved_commands
+    ADD CONSTRAINT saved_commands_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: targets targets_pkey; Type: CONSTRAINT; Schema: public; Owner: mothman
 --
 
@@ -298,6 +350,14 @@ ALTER TABLE ONLY public.tokens
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: saved_commands command_to_user; Type: FK CONSTRAINT; Schema: public; Owner: mothman
+--
+
+ALTER TABLE ONLY public.saved_commands
+    ADD CONSTRAINT command_to_user FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
