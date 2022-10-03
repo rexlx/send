@@ -16,3 +16,5 @@ This is mostly a place for me to play around with vue. I repurposed the applicat
  ```
  
  do this is after you have provisioned the tables provided by api/data/brindle.sql
+ 
+ [here](https://youtu.be/RML4Hd_oE40) are [some](https://youtu.be/wNGJBhv6F2k) basic videos for getting setup. Theres quite a bit happening on the backend in regards to configuration that i'm skipping over in the videos. ill make some docs for that one day too....
