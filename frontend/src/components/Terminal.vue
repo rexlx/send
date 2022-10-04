@@ -87,7 +87,7 @@
 
 <script>
 import {store} from './store.js'
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import notie from 'notie'
 import Rules from './rules.js'
 import Receiver from './Receiver.vue'
@@ -115,7 +115,8 @@ export default {
             changeConfig(currentValue)
         })
 
-        fetch(process.env.VUE_APP_API_URL + "/admin/responses/num/" + resPerFetch.value, Rules.requestOptions(""))
+        onMounted(() => {
+            fetch(process.env.VUE_APP_API_URL + "/admin/responses/num/" + resPerFetch.value, Rules.requestOptions(""))
             .then((res) => res.json())
             .then((res) => {
                 if (res.error) {
@@ -160,6 +161,7 @@ export default {
                 }).catch((error) => {
                 console.log(error)
             })
+        })
 
         const refreshDB = async () => {
             fetch(process.env.VUE_APP_API_URL + "/admin/responses/num/" + resPerFetch.value, Rules.requestOptions(""))

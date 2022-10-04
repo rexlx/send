@@ -3,7 +3,7 @@ module.exports = {
       devServer: {
         headers: { "Access-Control-Allow-Origin": "*" },
         disableHostCheck: true,
-        proxy: "http://localhost:8888/",
+        proxy: "http://storage.nullferatu.com:8888/",
       }
     }
   };
