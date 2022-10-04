@@ -255,7 +255,8 @@ export default {
                         text: res.message
                     })
                 } else {
-                    store.commandHistory.push(res.data.config)
+                    store.commandHistory.unshift(res.data.config)
+                    // store.commandHistory.push(res.data.config)
                     delayedRefresh()
                 }
                 }).catch((error) => {
