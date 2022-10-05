@@ -47,7 +47,8 @@ export default {
 
 .rx {
     width: 50%;                                                                                                 
-    height: 500px;                                                                                              
+    height: 600px;
+    /* height: 500px;*/
     float: right;                                                                                               
     background-color: rgb(10, 10, 14);                                                                                  
     border: 1px;                                                                                                

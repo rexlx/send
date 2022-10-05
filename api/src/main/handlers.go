@@ -257,20 +257,6 @@ func (app *settings) ValidateToken(w http.ResponseWriter, r *http.Request) {
 	_ = app.writeJSON(w, http.StatusOK, payload)
 }
 
-func (app *settings) FallbackConfig(w http.ResponseWriter, r *http.Request) {
-	var config data.Config
-	err := app.GetRuntimeParams(app.runtimeParms, &config)
-	if err != nil {
-		app.errorJSON(w, err)
-	}
-	data := jsonResponse{
-		Error:   false,
-		Message: "success",
-		Data:    envelope{"config": config},
-	}
-	_ = app.writeJSON(w, http.StatusOK, data)
-}
-
 func (app *settings) AllTargets(w http.ResponseWriter, r *http.Request) {
 	var targets data.Target
 	all, err := targets.GetAllTargets()

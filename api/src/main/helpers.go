@@ -6,8 +6,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-
-	"github.com/rexlx/vapi/local/data"
 )
 
 // readJSON tries to read the body of a request and converts it into JSON
@@ -79,18 +77,17 @@ func (app *settings) errorJSON(w http.ResponseWriter, err error, status ...int) 
 	app.writeJSON(w, statusCode, payload)
 }
 
-// --:REX you changed *Config to *data.Config
-func (app *settings) GetRuntimeParams(path string, config *data.Config) error {
-	// contents, err := ioutil.ReadFile(path)
+func (app *settings) GetRuntimeParams(path string) (RuntimeParms, error) {
+	var config RuntimeParms
 	contents, err := os.ReadFile(path)
 	if err != nil {
-		return err
+		return config, err
 	}
 	// this is where we unmarshal the contents into config
 	err = json.Unmarshal(contents, &config)
 	if err != nil {
-		return err
+		return config, err
 	}
 
-	return nil
+	return config, nil
 }

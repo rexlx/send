@@ -34,7 +34,7 @@
                     <button @click="send" class="btn btn-outline-info" type="button">send</button>
                 </div>
                 <input type="text"
-                   class="form-control"
+                   class="form-control name"
                    ref="prompt"
                    placeholder="command"
                    v-model="command"

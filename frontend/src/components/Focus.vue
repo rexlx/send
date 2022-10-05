@@ -58,7 +58,7 @@ export default {
 .log {
     font-family: monospace;
     width: 50%;                                                                                                 
-    height: 500px;                                                                                              
+    height: 600px;                                                                                              
     float: left;                                                                                               
     background-color: rgb(10, 10, 14);                                                                                  
     border: 1px;                                                                                                

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,11 +14,11 @@ import (
 
 type config struct {
 	port    int
-	logfile string
+	logpath string
 }
 
 type settings struct {
-	config       config
+	config       RuntimeParms
 	infoLog      *log.Logger
 	errorLog     *log.Logger
 	models       data.Models
@@ -25,20 +26,37 @@ type settings struct {
 	runtimeParms string
 }
 
-func main() {
-	var cfg config
-	cfg.port = 8888
-	cfg.logfile = "/Users/rexfitzhugh/vapi.log"
+type RuntimeParms struct {
+	Logpath string `json:"logpath"`
+	Port    int    `json:"port"`
+	Env     string `json:"env"`
+}
 
-	file, err := os.OpenFile(cfg.logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+func main() {
+	dsn := os.Getenv("DSN")
+	environment := os.Getenv("ENV")
+	runtimeConfig := os.Getenv("CFG")
+
+	var cfg config
+	var config RuntimeParms
+	contents, err := os.ReadFile(runtimeConfig)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	// this is where we unmarshal the contents into config
+	err = json.Unmarshal(contents, &config)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	cfg.port = 8888
+	cfg.logpath = "/Users/rexfitzhugh/vapi.log"
+
+	file, err := os.OpenFile(config.Logpath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	infoLog := log.New(file, "_info_ ", log.Ldate|log.Ltime)
 	errorLog := log.New(file, "_error_ ", log.Ldate|log.Ltime)
-	dsn := os.Getenv("DSN")
-	environment := os.Getenv("ENV")
-	runtimeParms := os.Getenv("CFG")
 
 	db, err := drivers.GetPostgres(dsn)
 	if err != nil {
@@ -47,12 +65,12 @@ func main() {
 	defer db.SQL.Close()
 
 	app := &settings{
-		config:       cfg,
+		config:       config,
 		infoLog:      infoLog,
 		errorLog:     errorLog,
 		models:       data.New(db.SQL),
 		environment:  environment,
-		runtimeParms: runtimeParms,
+		runtimeParms: runtimeConfig,
 	}
 
 	err = app.serve()
@@ -62,10 +80,10 @@ func main() {
 }
 
 func (app *settings) serve() error {
-	app.infoLog.Printf("starting at %v on port..%v", time.Now(), app.config.port)
-	app.infoLog.Println("logging to", app.config.logfile)
+	app.infoLog.Printf("starting at %v on port..%v", time.Now(), app.config.Port)
+	app.infoLog.Println("logging to", app.config.Logpath)
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", app.config.port),
+		Addr:    fmt.Sprintf(":%d", app.config.Port),
 		Handler: app.routes(),
 	}
 	return srv.ListenAndServe()

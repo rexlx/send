@@ -1,12 +1,5 @@
 {
-    "user": "rxlx",
-    "key": "/Users/rxlx/.ssh/id_ecdsa",
-    "hosts": "storage.nullferatu.com drfright.nullferatu.com debian.nullferatu.com rxlx.nullferatu.com",
-    "fromfile": "/home/rxlx/bin/data/main_nodes.txt",
-    "logpath": "udp@192.168.86.10:514",
-    "command": "whoami",
-    "timeout": 59,
-    "port": 22,
-    "syslog": true,
-    "fatal": false
+    "env": "dev",
+    "logpath": "/Users/rexfitzhugh/vapi.log",
+    "port": 8888
    }

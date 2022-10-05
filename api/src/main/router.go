@@ -34,9 +34,7 @@ func (app *settings) routes() http.Handler {
 		mux.Post("/targets/save", app.EditTarget)
 		mux.Post("/targets/get/{id}", app.GetTarget)
 		mux.Post("/targets/delete", app.DeleteTarget)
-		// mux.Post("/ztarget/{id}", app.DisableTarget)
 		// config routes
-		mux.Post("/config", app.FallbackConfig)
 		mux.Post("/configs", app.AllConfigs)
 		mux.Post("/configs/get/{id}", app.GetConfig)
 		mux.Post("/configs/delete", app.DeleteConfig)

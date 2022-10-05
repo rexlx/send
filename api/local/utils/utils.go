@@ -46,7 +46,7 @@ func SendSSHCmd(dest, user string, c *data.Config, t time.Time) GenericResponse 
 			Host:    dest,
 		}
 	}
-	//--:REX this might close when called...
+	// this may belong somewhere else...
 	defer session.Close()
 
 	// store the results of the command that was sent
