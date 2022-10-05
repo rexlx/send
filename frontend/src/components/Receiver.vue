@@ -45,11 +45,6 @@ export default {
 
 <style scoped>
 
-.host {
-    overflow-y: scroll;
-    color: rgb(117, 106, 90);
-}
-
 .rx {
     width: 50%;                                                                                                 
     height: 500px;                                                                                              

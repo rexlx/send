@@ -63,7 +63,8 @@ export default {
     background-color: rgb(10, 10, 14);                                                                                  
     border: 1px;                                                                                                
     border-color: black;
-    color: rgb(148, 122, 180);
+    /* color: rgb(148, 122, 180); */
+    color: rgb(104, 121, 120);
     overflow-y: scroll;
 }
 

@@ -24,8 +24,8 @@ export default {
 </script>
 
 <style scoped>
-select {
+/* select {
     background: rgb(30, 30, 40);
     border: black;
-}
+} */
 </style>

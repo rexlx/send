@@ -55,7 +55,7 @@ export default {
 }
 
 .response {
-    color: rgb(160, 205, 205);
+    color: honeydew;
     white-space: pre-wrap;
     width: 85%;
     font-family: monospace;

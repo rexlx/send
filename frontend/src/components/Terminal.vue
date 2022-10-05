@@ -377,7 +377,7 @@ select {
 }
 
 .terminal {
-    color: rgba(70, 140, 210);
+    color: rgb(70, 140, 210);
     padding: 20px;
     margin: 1px;
     width: 50%;
@@ -387,7 +387,7 @@ select {
 }
 
 .config {
-    color: rgba(70, 140, 210);
+    color: rgb(70, 140, 210);
     padding: 10px;
     margin: 1px;
     float: left;
@@ -402,7 +402,7 @@ select {
 }
 
 .config-details {
-    color: rgb(100, 125, 150);
+    color: rgb(200, 125, 150);
     margin: 4px;
 }
 
