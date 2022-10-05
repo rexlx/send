@@ -42,7 +42,6 @@ export default {
         const config = ref("")
         Rules.hasToken()
         const cleanedRes = computed (() => {
-            console.log(response.value)
             return JSON.parse(response.value.reply)
             // return JSON.parse(JSON.parse(response.value.reply))
         })

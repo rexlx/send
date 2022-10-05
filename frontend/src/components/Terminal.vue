@@ -111,7 +111,6 @@ export default {
         })
 
         watch(selectedConfig, (currentValue) => {
-            console.log(currentValue)
             changeConfig(currentValue)
         })
 

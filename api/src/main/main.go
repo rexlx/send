@@ -28,7 +28,7 @@ type settings struct {
 func main() {
 	var cfg config
 	cfg.port = 8888
-	cfg.logfile = "/home/rxlx/vapi.log"
+	cfg.logfile = "/Users/rexfitzhugh/vapi.log"
 
 	file, err := os.OpenFile(cfg.logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
