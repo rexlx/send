@@ -23,7 +23,7 @@
                     </text-input>
                     <hr />
 
-                    you dont have to be {{email}}
+                    logging in as: {{email}}
                     <hr>
                     <input type="submit" class="btn btn-primary" value="login">
                 </form-tag>
