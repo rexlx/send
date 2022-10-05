@@ -402,7 +402,7 @@ select {
 }
 
 .config-details {
-    color: rgb(200, 125, 150);
+    color: rgb(100, 125, 150);
     margin: 4px;
 }
 
@@ -416,9 +416,9 @@ select {
 
 .tools {
     float: right;
-    margin: 10px;
+    margin: 2px;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 2px;
     border: 1px solid black;
 }
 
