@@ -12,7 +12,8 @@ import (
 )
 
 type config struct {
-	port int
+	port    int
+	logfile string
 }
 
 type settings struct {
@@ -27,8 +28,14 @@ type settings struct {
 func main() {
 	var cfg config
 	cfg.port = 8888
-	infoLog := log.New(os.Stdout, "_info_ ", log.Ldate)
-	errorLog := log.New(os.Stdout, "_error_ ", log.Ldate)
+	cfg.logfile = "/home/rxlx/vapi.log"
+
+	file, err := os.OpenFile(cfg.logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	infoLog := log.New(file, "_info_ ", log.Ldate|log.Ltime)
+	errorLog := log.New(file, "_error_ ", log.Ldate|log.Ltime)
 	dsn := os.Getenv("DSN")
 	environment := os.Getenv("ENV")
 	runtimeParms := os.Getenv("CFG")
@@ -56,7 +63,7 @@ func main() {
 
 func (app *settings) serve() error {
 	app.infoLog.Printf("starting at %v on port..%v", time.Now(), app.config.port)
-
+	app.infoLog.Println("logging to", app.config.logfile)
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", app.config.port),
 		Handler: app.routes(),
