@@ -85,6 +85,7 @@ func (app *settings) Login(w http.ResponseWriter, r *http.Request) {
 func (app *settings) Logout(w http.ResponseWriter, r *http.Request) {
 	var request struct {
 		Token string `json:"token"`
+		User  string `json:"user"`
 	}
 
 	err := app.readJSON(w, r, &request)
@@ -93,6 +94,7 @@ func (app *settings) Logout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	app.infoLog.Printf("logging %v out...", request.User)
 	err = app.models.Token.DeleteByToken(request.Token)
 	if err != nil {
 		app.errorJSON(w, errors.New("bad json"))

@@ -69,6 +69,7 @@ export default {
     logout() {
       const data = {
         token: store.token,
+        user: store.user.email
       }
       fetch(process.env.VUE_APP_API_URL +"/users/logout", Rules.requestOptions(data))
       .then((res) => res.json())

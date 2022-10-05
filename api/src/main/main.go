@@ -12,11 +12,6 @@ import (
 	"github.com/rexlx/vapi/local/drivers"
 )
 
-type config struct {
-	port    int
-	logpath string
-}
-
 type settings struct {
 	config       RuntimeParms
 	infoLog      *log.Logger
@@ -37,19 +32,15 @@ func main() {
 	environment := os.Getenv("ENV")
 	runtimeConfig := os.Getenv("CFG")
 
-	var cfg config
 	var config RuntimeParms
 	contents, err := os.ReadFile(runtimeConfig)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	// this is where we unmarshal the contents into config
 	err = json.Unmarshal(contents, &config)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	cfg.port = 8888
-	cfg.logpath = "/Users/rexfitzhugh/vapi.log"
 
 	file, err := os.OpenFile(config.Logpath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
