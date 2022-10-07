@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/gorilla/websocket"
 	"github.com/rexlx/vapi/local/data"
 	"github.com/rexlx/vapi/local/utils"
 )
@@ -21,6 +22,12 @@ type jsonResponse struct {
 }
 
 type envelope map[string]interface{}
+
+var upgradeConn = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin:     func(r *http.Request) bool { return true },
+}
 
 func (app *settings) Login(w http.ResponseWriter, r *http.Request) {
 	type credentials struct {
@@ -668,4 +675,26 @@ func (app *settings) GetUserSavedCommands(w http.ResponseWriter, r *http.Request
 	}
 
 	app.writeJSON(w, http.StatusOK, data)
+}
+
+// web socket stuff
+type wsRes struct {
+	Action      string `json:"action"`
+	Message     string `json:"message"`
+	MessageType string `json:"message_type"`
+}
+
+func (app *settings) WsConnect(w http.ResponseWriter, r *http.Request) {
+	app.infoLog.Println("wsc called")
+	ws, err := upgradeConn.Upgrade(w, r, nil)
+	if err != nil {
+		app.errorLog.Println(err)
+	}
+	app.infoLog.Println("client connected to ws...")
+	var res wsRes
+	res.Message = `<p>connected to <em>server</em></p>`
+	err = ws.WriteJSON(res)
+	if err != nil {
+		app.errorLog.Println(err)
+	}
 }

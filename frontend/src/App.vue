@@ -1,9 +1,11 @@
 <template>
+<div>
   <Header />
   <div>
     <router-view :key="componentKey" @success="success" @error="error" @warning="warning" @forceUpdate="forceUpdate" />
   </div>
   <Footer />
+</div>
 </template>
 
 <script>

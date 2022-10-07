@@ -7,7 +7,7 @@
 
 <style scoped>
 footer {
-    background: rgb(22,22,36);
+    background: rgb(12,12,12);
     color: honeydew;
     min-height: 100vh;
     font-size: 0.8em;

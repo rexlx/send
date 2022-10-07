@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
     <div v-if="response">
-        <h5>{{ response.host }}</h5>
+        <h5>{{ response.host }} | roundtrip time to run: {{ runtime }}</h5>
         <hr>
-        <span>roundtrip time to run:{{ runtime }}</span>
+        <h6 class="info">{{ timein }}</h6>
         <p class="response">{{ cleanedRes.message }}</p>
     </div>
     <div v-else class="container-fluid">
@@ -62,7 +62,11 @@ export default {
             let rcv = new Date(response.value.time_rx)
             return msToTime((rcv - xmit))
         })
-            return { store, response, config, cleanedRes, runtime}
+
+        const timein = computed(() => {
+            return new Date(response.value.time_rx)
+        })
+            return { store, response, config, cleanedRes, runtime, timein}
     }
 }
 </script>
@@ -78,6 +82,11 @@ h5 {
     white-space: pre-wrap;
     width: 85%;
     font-family: monospace;
+}
+
+.info {
+    color: mintcream;
+    text-align: center;
 }
 
 </style>

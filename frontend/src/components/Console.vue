@@ -82,6 +82,11 @@
                 <button @click="refreshDB" class="btn btn-outline-info" type="button">refresh</button>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <button @click="wsConnect" class="btn btn-outline-info" type="button">ws</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -97,6 +102,7 @@ export default {
     components: { Focus, Receiver },
     setup() {
         const q = ref([])
+        const socket = ref(null)
         const command = ref('')
         const commandName = ref('')
         const responses = ref([])
@@ -343,6 +349,14 @@ export default {
             })
         }
 
+        const wsConnect = async () => {
+            console.log('..ok')
+            let sck = new WebSocket("ws://127.0.0.1:8888/wsc")
+            sck.onopen = () => {
+                console.log("connected nice")
+            }
+        }
+
         return { 
             store,
             command,
@@ -362,7 +376,9 @@ export default {
             setNumResponses,
             saveCommand,
             selectedCommand,
-            selectedConfig
+            selectedConfig,
+            wsConnect,
+            socket
             }
     }
 

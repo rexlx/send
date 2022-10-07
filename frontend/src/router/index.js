@@ -5,10 +5,9 @@ import Users from "./../components/Users.vue"
 import User from "./../components/UserEdit.vue"
 import Targets from "./../components/Targets.vue"
 import Target from "./../components/TargetEdit.vue"
-import Terminal from "./../components/Terminal.vue"
+import Console from "../components/Console.vue"
 import Receiver from "../components/Receiver.vue"
 import Result from "../components/Result.vue"
-// import Account from "../components/Account.vue"
 import Configs from "../components/Configs.vue"
 import Config from "../components/ConfigEdit.vue"
 import Rules from '../components/rules'
@@ -61,8 +60,8 @@ const routes = [
     },
     {
         path: '/admin/console',
-        name: 'Terminal',
-        component: Terminal,
+        name: 'Console',
+        component: Console,
     },
     {
         path: '/admin/config',
