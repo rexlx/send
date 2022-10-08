@@ -853,13 +853,14 @@ func (c *Config) CreateConfig(cfg Config) (int, error) {
 
 // you changed config to string from Config
 type Reply struct {
-	ID     int       `json:"id"`
-	Reply  string    `json:"reply"`
-	TimeTX time.Time `json:"time_tx"`
-	TimeRX time.Time `json:"time_rx"`
-	Config string    `json:"config"`
-	Host   string    `json:"host"`
-	Good   bool      `json:"good"`
+	ID      int       `json:"id"`
+	Reply   string    `json:"reply"`
+	TimeTX  time.Time `json:"time_tx"`
+	TimeRX  time.Time `json:"time_rx"`
+	Config  string    `json:"config"`
+	Host    string    `json:"host"`
+	Good    bool      `json:"good"`
+	ReplyTo string    `json:"reply_to"`
 }
 
 func (res *Reply) GetResponses(limit int) ([]*Reply, error) {
@@ -873,7 +874,8 @@ func (res *Reply) GetResponses(limit int) ([]*Reply, error) {
 	  reply_received,
 	  config,
 	  host,
-	  good from replies
+	  good,
+	  reply_to from replies
 	  order by id desc
 	  limit %v`
 	rows, err := db.QueryContext(ctx, fmt.Sprintf(q, limit))
@@ -895,6 +897,7 @@ func (res *Reply) GetResponses(limit int) ([]*Reply, error) {
 			&reply.Config,
 			&reply.Host,
 			&reply.Good,
+			&reply.ReplyTo,
 		)
 
 		if err != nil {
@@ -911,8 +914,8 @@ func (res *Reply) InsertResponse(response Reply) (int, error) {
 
 	var newID int
 
-	q := `insert into replies (command_sent, reply_received, reply, config, good, host)
-	values ($1, $2, $3, $4, $5, $6) returning id
+	q := `insert into replies (command_sent, reply_received, reply, config, good, host, reply_to)
+	values ($1, $2, $3, $4, $5, $6, $7) returning id
 	`
 
 	err := db.QueryRowContext(ctx, q,
@@ -922,6 +925,7 @@ func (res *Reply) InsertResponse(response Reply) (int, error) {
 		response.Config,
 		response.Good,
 		response.Host,
+		response.ReplyTo,
 	).Scan(&newID)
 	if err != nil {
 		return 0, err
@@ -941,7 +945,8 @@ func (res *Reply) GetResponse(id int) (*Reply, error) {
 	  reply_received,
 	  config,
 	  host,
-	  good from replies
+	  good,
+	  reply_to from replies
 	  where id = $1`
 	row := db.QueryRowContext(ctx, q, id)
 	err := row.Scan(
@@ -952,6 +957,7 @@ func (res *Reply) GetResponse(id int) (*Reply, error) {
 		&reply.Config,
 		&reply.Host,
 		&reply.Good,
+		&reply.ReplyTo,
 	)
 	if err != nil {
 		return nil, err
