@@ -1,6 +1,9 @@
 <template>
   <div class="container-fluid rx">
-    <table v-if="responses" class="table table-dark table-striped">
+    <div v-for="r in responses" :key=r class="card replies" :class="{ warn: r.good }">
+        <div @click="doThing" class="card-body">{{ r.id }} | {{ r.host }} | {{ r.reply_to }}</div>
+    </div>
+    <!-- <table v-if="responses" class="table table-dark table-striped">
             <thead>
                 <tr>
                     <th>id</th>
@@ -24,7 +27,7 @@
                     </td>
                 </tr>
             </tbody>
-            </table>
+            </table> -->
   </div>
 </template>
 
@@ -32,13 +35,16 @@
 import {store} from './store.js'
 import Rules from './rules.js'
 // import notie from 'notie'
-// import { ref } from 'vue'
+// import { computed } from 'vue'
 
 export default {
     props: ['responses'],
     setup() {
         Rules.hasToken()
-            return { store }
+        const doThing = async () => {
+            console.log('i did a thing')
+        }
+            return { store, doThing }
     }
 }
 </script>
@@ -48,19 +54,22 @@ export default {
 .rx {
     width: 50%;                                                                                                 
     height: 600px;
-    /* height: 500px;*/
     float: right;                                                                                               
     background-color: rgb(10, 10, 14);                                                                                  
     border: 1px;                                                                                                
     border-color: black;
     color: lightskyblue;
     max-height: 480;
-    /* overflow: auto; */
     overflow-y: scroll;
 }
 
 .replies {
-    list-style: none;
+    background-color: rgb(20, 20, 40);
+    cursor: pointer;
+}
+
+.err {
+    background-color: olivedrab;
 }
 
 .mspace {

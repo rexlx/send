@@ -75,16 +75,14 @@
         <Receiver :responses="responses" />
         <Focus />
         <div class="row tools text-center">
-            <div v-for="i in 5" :key="i" class="btn-group mr-2 col" role="group">
-                <button @click="setNumResponses(i)" class="btn btn-outline-secondary" :class="{ active: resPerFetch === i }" type="button">{{ i*30 }}</button>
-            </div>
             <div class="col">
-                <button @click="refreshDB" class="btn btn-outline-info" type="button">refresh</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <button @click="wsConnect" class="btn btn-outline-info" type="button">ws</button>
+                <select v-model="resPerFetch" class="config">
+                    <option disabled value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="50">100</option>
+                    <option value="50">150</option>
+                    <option value="50">200</option>
+                </select>
             </div>
         </div>
     </div>
@@ -106,7 +104,7 @@ export default {
         const command = ref('')
         const commandName = ref('')
         const responses = ref([])
-        const resPerFetch = ref(1)
+        const resPerFetch = ref(25)
         const savedCommands = ref([])
         const selectedCommand = ref('')
         const selectedConfig = ref('')
@@ -114,6 +112,11 @@ export default {
 
         watch(selectedCommand, (currentValue) => {
             command.value = currentValue
+        })
+
+        watch(resPerFetch, (currentValue) => {
+            resPerFetch.value = currentValue
+            console.log(resPerFetch.value)
         })
 
         watch(selectedConfig, (currentValue) => {
@@ -187,7 +190,7 @@ export default {
 
         const delayedRefresh = async () => {
             setTimeout(() => {
-                fetch(process.env.VUE_APP_API_URL + "/admin/responses", Rules.requestOptions(""))
+                fetch(process.env.VUE_APP_API_URL + "/admin/responses/num/" + resPerFetch.value, Rules.requestOptions(""))
                 .then((res) => res.json())
                 .then((res) => {
                     if (res.error) {
@@ -247,9 +250,10 @@ export default {
                 timeout: store.config.timeout,
                 port: store.config.port,
                 fatal: store.config.fatal,
-                ordered: store.config.ordered
+                ordered: store.config.ordered,
+                reply_to: store.config.command.slice(0, 40)
             }
-
+            console.log(data)
             q.value = []
             command.value = ""
 
@@ -276,14 +280,6 @@ export default {
                     type: "success",
                     text: "command sent"
                 })
-        }
-
-        const setNumResponses = async (num) => {
-            if (num > 0) {
-                resPerFetch.value = num
-            } else {
-                resPerFetch.value = 1
-            }
         }
 
         const getConfigs = async () => {
@@ -373,7 +369,6 @@ export default {
             changeConfig,
             refreshDB,
             resPerFetch,
-            setNumResponses,
             saveCommand,
             selectedCommand,
             selectedConfig,
