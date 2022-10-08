@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -11,6 +12,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/websocket"
+	"github.com/pusher/pusher-http-go"
 	"github.com/rexlx/vapi/local/data"
 	"github.com/rexlx/vapi/local/utils"
 )
@@ -678,23 +680,41 @@ func (app *settings) GetUserSavedCommands(w http.ResponseWriter, r *http.Request
 }
 
 // web socket stuff
-type wsRes struct {
-	Action      string `json:"action"`
-	Message     string `json:"message"`
-	MessageType string `json:"message_type"`
-}
+// type wsRes struct {
+// 	Action      string `json:"action"`
+// 	Message     string `json:"message"`
+// 	MessageType string `json:"message_type"`
+// }
 
-func (app *settings) WsConnect(w http.ResponseWriter, r *http.Request) {
-	app.infoLog.Println("wsc called")
-	ws, err := upgradeConn.Upgrade(w, r, nil)
+func (app *settings) IpeAuth(w http.ResponseWriter, r *http.Request) {
+	body, _ := io.ReadAll(r.Body)
+
+	var user data.User
+	err := app.readJSON(w, r, &user)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	u, err := app.models.User.GetUser(user.ID)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	presenceData := pusher.MemberData{
+		UserID: strconv.Itoa(u.ID),
+		UserInfo: map[string]string{
+			"name": u.FirstName,
+			"id":   strconv.Itoa(u.ID),
+		},
+	}
+
+	res, err := app.WsClient.AuthenticatePresenceChannel(body, presenceData)
 	if err != nil {
 		app.errorLog.Println(err)
+		return
 	}
-	app.infoLog.Println("client connected to ws...")
-	var res wsRes
-	res.Message = `<p>connected to <em>server</em></p>`
-	err = ws.WriteJSON(res)
-	if err != nil {
-		app.errorLog.Println(err)
-	}
+	_ = app.writeJSON(w, http.StatusOK, res)
+
 }

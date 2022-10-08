@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/pusher/pusher-http-go"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -1019,4 +1020,20 @@ func (c *SavedCommand) GetSavedCommands(limit, id int) ([]*SavedCommand, error) 
 		commands = append(commands, &command)
 	}
 	return commands, nil
+}
+
+// websocket stuff
+
+type WSClient interface {
+	Trigger(channel string, eventName string, data interface{}) error
+	TriggerMulti(channels []string, eventName string, data interface{}) error
+	TriggerExclusive(channel string, eventName string, data interface{}, socketID string) error
+	TriggerMultiExclusive(channels []string, eventName string, data interface{}, socketID string) error
+	TriggerBatch(batch []pusher.Event) error
+	Channels(additionalQueries map[string]string) (*pusher.ChannelsList, error)
+	Channel(name string, additionalQueries map[string]string) (*pusher.Channel, error)
+	GetChannelUsers(name string) (*pusher.Users, error)
+	AuthenticatePrivateChannel(params []byte) (response []byte, err error)
+	AuthenticatePresenceChannel(params []byte, member pusher.MemberData) (response []byte, err error)
+	Webhook(header http.Header, body []byte) (*pusher.Webhook, error)
 }

@@ -1,5 +1,5 @@
 {
     "env": "dev",
-    "logpath": "/Users/rexfitzhugh/vapi.log",
+    "logpath": "/home/rxlx/vapi.log",
     "port": 8888
    }

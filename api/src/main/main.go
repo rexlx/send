@@ -16,6 +16,7 @@ type settings struct {
 	config       RuntimeParms
 	infoLog      *log.Logger
 	errorLog     *log.Logger
+	WsClient     data.WSClient
 	models       data.Models
 	environment  string
 	runtimeParms string

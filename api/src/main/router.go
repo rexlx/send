@@ -46,13 +46,17 @@ func (app *settings) routes() http.Handler {
 		mux.Post("/responses", app.Last24responses)
 		mux.Post("/responses/num/{num}", app.GetResponses)
 		mux.Post("/responses/get/{id}", app.GetResponse)
-		// web socket
+
+	})
+
+	mux.Route("/ipe", func(mux chi.Router) {
+		mux.Use(app.AuthTokenMW)
+		mux.Post("/auth", app.IpeAuth)
 	})
 	// non priv rts
 	mux.Post("/vtk", app.ValidateToken)
 	mux.Post("/users/logout", app.Logout)
 	mux.Post("/users/login", app.Login)
-	mux.Get("/wsc", app.WsConnect)
 
 	// static files
 	fserver := http.FileServer(http.Dir("./static/"))
