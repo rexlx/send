@@ -351,7 +351,7 @@ export default {
 
         const wsConnect = async () => {
             console.log('..ok')
-            let sck = new WebSocket("ws://127.0.0.1:8888/wsc")
+            let sck = new WebSocket("ws://storage.nullferatu.com:8888/wsc")
             sck.onopen = () => {
                 console.log("connected nice")
             }
