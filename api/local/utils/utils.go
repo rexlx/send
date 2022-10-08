@@ -17,6 +17,7 @@ type GenericResponse struct {
 	TimeRX  time.Time   `json:"time_rx"`
 	Host    string      `json:"host"`
 	Config  data.Config `json:"data"`
+	ReplyTo string      `json:"reply_to"`
 }
 
 func SendSSHCmd(dest, user string, c *data.Config, t time.Time) GenericResponse {
@@ -71,6 +72,7 @@ func SendSSHCmd(dest, user string, c *data.Config, t time.Time) GenericResponse 
 			TimeRX:  time.Now(),
 			Host:    dest,
 			Config:  *c,
+			ReplyTo: c.Command,
 		}
 	}
 	return GenericResponse{
@@ -81,6 +83,7 @@ func SendSSHCmd(dest, user string, c *data.Config, t time.Time) GenericResponse 
 		TimeRX:  time.Now(),
 		Host:    dest,
 		Config:  *c,
+		ReplyTo: c.Command,
 	}
 }
 

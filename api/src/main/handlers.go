@@ -543,7 +543,8 @@ func (app *settings) SendCommand(w http.ResponseWriter, r *http.Request) {
 				reply.TimeTX = results.TimeTX
 				reply.TimeRX = results.TimeRX
 				reply.Host = results.Host
-				reply.Reply = string(msg) // dont store as string!
+				reply.Reply = string(msg)
+				reply.ReplyTo = results.ReplyTo // dont store as string!
 				_, err := app.models.Reply.InsertResponse(reply)
 				if err != nil {
 					app.errorLog.Println(err)
