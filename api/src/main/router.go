@@ -43,7 +43,7 @@ func (app *settings) routes() http.Handler {
 		mux.Post("/send", app.SendCommand)
 		mux.Post("/save/command", app.SaveCommand)
 		mux.Post("/commands/get", app.GetUserSavedCommands)
-		mux.Post("/responses", app.Last24responses)
+		// mux.Post("/responses", app.Last24responses)
 		mux.Post("/responses/num/{num}", app.GetResponses)
 		mux.Post("/responses/get/{id}", app.GetResponse)
 

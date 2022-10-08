@@ -501,6 +501,7 @@ func (app *settings) SendCommand(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err := app.readJSON(w, r, &config)
+	app.infoLog.Println(config)
 	if err != nil {
 		app.errorLog.Println(err)
 		app.errorJSON(w, err)
@@ -594,7 +595,7 @@ func (app *settings) GetResponses(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var replies data.Reply
-	all, err := replies.GetResponses(resPerPage * 30)
+	all, err := replies.GetResponses(resPerPage)
 	if err != nil {
 		app.errorLog.Println(err)
 		return
