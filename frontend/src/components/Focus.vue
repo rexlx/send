@@ -10,18 +10,6 @@
     <div v-else class="details">
         {{ details }}
     </div>
-    <!-- <div v-if="tab < 1">
-        <div v-for="cfg in store.commandHistory" :key="cfg" >
-            <div>
-                {{ cfg.command }}
-            </div>
-        </div>
-    </div>
-    <div v-else class="container-fluid">
-        <div class="col">
-            <p><small>command history empty</small></p>
-        </div> -->
-    <!-- </div> -->
   </div>
 </template>
 
