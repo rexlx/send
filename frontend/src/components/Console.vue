@@ -59,6 +59,9 @@
                     </option>
                 </select>
             </div>
+            <div class="col">
+                <button @click="tab=0" class="btn btn-outline-light" type="button">mode</button>
+            </div>
             </div>
         </div>
         <div class="row">
@@ -73,7 +76,7 @@
             </div>
         </div>
         <Receiver @focus-details="doThing" :responses="responses" />
-        <Focus :details="details" />
+        <Focus :tab="tab" :details="details" />
         <div class="row tools text-center">
             <div class="col">
                 <select v-model="resPerFetch" class="config">
@@ -110,6 +113,7 @@ export default {
         const selectedConfig = ref('')
         const allConfigs = ref([])
         const details = ref('')
+        const tab = ref(0)
 
         watch(selectedCommand, (currentValue) => {
             command.value = currentValue
@@ -346,6 +350,7 @@ export default {
 
         const doThing = async (data) => {
             details.value = JSON.parse(data).message
+            tab.value = 1
         }
 
         const wsConnect = async () => {
@@ -376,6 +381,7 @@ export default {
             saveCommand,
             selectedCommand,
             selectedConfig,
+            tab,
             wsConnect,
             socket
             }

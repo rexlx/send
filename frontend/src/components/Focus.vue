@@ -1,9 +1,16 @@
 <template>
   <div class="container-fluid log">
-    <div class="details">
+    <div v-if="tab < 1" >
+        <div v-for="cfg in store.commandHistory" :key="cfg" >
+            <div>
+                {{ cfg.command }}
+            </div>
+        </div>
+    </div>
+    <div v-else class="details">
         {{ details }}
     </div>
-    <!-- <div v-if="store.commandHistory.length > 0">
+    <!-- <div v-if="tab < 1">
         <div v-for="cfg in store.commandHistory" :key="cfg" >
             <div>
                 {{ cfg.command }}
@@ -25,7 +32,7 @@ import notie from 'notie'
 import { ref } from 'vue'
 
 export default {
-    props: ['details'],
+    props: ['details', 'tab'],
     setup() {
         const reply = ref("")
         Rules.hasToken()
