@@ -824,6 +824,7 @@ func (c *Config) DeleteConfig(id int) error {
 func (c *Config) CreateConfig(cfg Config) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
+	hosts := strings.ReplaceAll(fmt.Sprintf("{%v}", cfg.Hosts), " ", ",")
 
 	var newID int
 	q := `
@@ -838,7 +839,7 @@ func (c *Config) CreateConfig(cfg Config) (int, error) {
 		cfg.User,
 		cfg.Key,
 		cfg.LogPath,
-		cfg.Hosts,
+		hosts,
 		cfg.Command,
 		cfg.Timeout,
 		cfg.Port,
