@@ -1,4 +1,4 @@
-This is mostly a place for me to play around with vue. I repurposed the application taught in [this](https://www.udemy.com/course/working-with-vue-3-and-go/) course (which i'm still working my way through :)) ). That said, I'd still like to post some screenshots and instructions in the event anyone happens upon this repo. Until then, I'm going to assume you know / have a few things.
+This is mostly a place for me to play around with vue. I repurposed the stuff taught in [this](https://www.udemy.com/course/working-with-vue-3-and-go/) course. That said, I'd still like to post some screenshots and instructions in the event anyone happens upon this repo. Until then, I'm going to assume you know / have a few things.
 
 1. you will need [go](https://go.dev/doc/install) and [node](https://nodejs.org/en/download/)/npm installed.
 2. you know how to run code in general (in this case, compiling go and running the vue frontend.)
@@ -17,4 +17,4 @@ This is mostly a place for me to play around with vue. I repurposed the applicat
  
  do this is after you have provisioned the tables provided by api/data/brindle.sql
  
- [here](https://youtu.be/RML4Hd_oE40) are [some](https://youtu.be/wNGJBhv6F2k) basic videos for getting setup. Theres quite a bit happening on the backend in regards to configuration that i'm skipping over in the videos. ill make some docs for that one day too....
+ [here](https://youtu.be/RML4Hd_oE40) are [some](https://youtu.be/wNGJBhv6F2k) basic videos for getting setup. Please ignore the visual changes in the app you see, I made some significant css/html changes since the video was recorded (that should have no effect on install)
