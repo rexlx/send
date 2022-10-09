@@ -11,7 +11,7 @@
                     <th>user</th>
                     <th>email</th>
                     <th>status</th>
-                    <th>presence</th>
+                    <th>session</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,7 +21,7 @@
                 </td>
                 <td>{{u.email}}</td>
                 <td v-if="u.active === 1">
-                <span class="badge bg-info">all good</span>
+                <span class="badge bg-info">active</span>
                 </td>
                 <td v-else>
                 <span class="badge bg-warning">inactive</span>

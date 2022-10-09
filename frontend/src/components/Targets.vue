@@ -5,6 +5,13 @@
                 <h1 class="mt-3">all accounts</h1>
             </div>
             <hr>
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4 errata">this feature incomplete</h1>
+                    <p class="lead">you can add as many <em>targets</em> as you'd like.</p>
+                    <p>right now we use a list of strings for hosts. one day it should be a slice of type targets</p>
+                </div>
+            </div>
             <table v-if="this.ready" class="table table-dark table-striped">
             <thead>
                 <tr>
@@ -97,7 +104,18 @@ export default {
 </script>
 
 <style>
-th {
+h1 {
     color: bisque;
+}
+
+.errata {
+    color:tomato
+}
+.errata:hover {
+    color: skyblue;
+}
+
+p {
+    color: azure;
 }
 </style>

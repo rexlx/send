@@ -32,3 +32,29 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+input[type=text] {
+  background-color: rgb(29, 29, 39);
+  color: rgb(196, 200, 202);
+  border-color: black;
+}
+
+input[type=email] {
+  background-color: rgb(29, 29, 39);
+  color: rgb(196, 200, 202);
+  border-color: black;
+}
+
+input[type=password] {
+  background-color: rgb(29, 29, 39);
+  color: rgb(196, 200, 202);
+  border-color: black;
+}
+
+input[type=number] {
+  background-color: rgb(29, 29, 39);
+  color: rgb(196, 200, 202);
+  border-color: black;
+}
+</style>

@@ -80,7 +80,7 @@
         <div class="row tools text-center">
             <div class="col">
                 <select v-model="resPerFetch" class="config">
-                    <option disabled value="25">25</option>
+                    <option disabled value="25">results/page</option>
                     <option value="50">50</option>
                     <option value="50">100</option>
                     <option value="50">150</option>
@@ -120,6 +120,9 @@ export default {
         })
 
         watch(resPerFetch, (currentValue) => {
+            if (currentValue > 25) {
+               resPerFetch.value = currentValue 
+            }
             resPerFetch.value = currentValue
         })
 
