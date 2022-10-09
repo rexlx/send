@@ -1,6 +1,9 @@
 <template>
   <div class="container-fluid log">
-    <div v-if="store.commandHistory.length > 0">
+    <div class="details">
+        {{ details }}
+    </div>
+    <!-- <div v-if="store.commandHistory.length > 0">
         <div v-for="cfg in store.commandHistory" :key="cfg" >
             <div>
                 {{ cfg.command }}
@@ -10,8 +13,8 @@
     <div v-else class="container-fluid">
         <div class="col">
             <p><small>command history empty</small></p>
-        </div>
-    </div>
+        </div> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -22,10 +25,10 @@ import notie from 'notie'
 import { ref } from 'vue'
 
 export default {
+    props: ['details'],
     setup() {
         const reply = ref("")
         Rules.hasToken()
-
         const fallback = async () => {
             fetch(process.env.VUE_APP_API_URL + "/admin/config", Rules.requestOptions(""))
             .then((res) => res.json())
@@ -66,6 +69,11 @@ export default {
     color: rgb(148, 122, 180);
     /* color: rgb(182, 199, 198); */
     overflow-y: scroll;
+}
+
+.details {
+    white-space: pre-wrap;
+    font-family: monospace;
 }
 
 

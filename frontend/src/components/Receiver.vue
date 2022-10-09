@@ -1,7 +1,11 @@
 <template>
   <div class="container-fluid rx">
-    <div v-for="r in responses" :key=r class="card replies" :class="{ warn: r.good }">
-        <div @click="doThing" class="card-body">{{ r.id }} | {{ r.host }} | {{ r.reply_to }}</div>
+    <div v-for="r in responses" :key=r.id class="card replies" :class="{ warn: r.good }">
+        <div @click="$emit('focusDetails', r.reply)"
+          class="card-body"
+          :class="{ err: !r.good }">
+          {{ r.id }} | {{ r.host }} | {{ r.reply_to }}
+        </div>
     </div>
     <!-- <table v-if="responses" class="table table-dark table-striped">
             <thead>
@@ -35,14 +39,14 @@
 import {store} from './store.js'
 import Rules from './rules.js'
 // import notie from 'notie'
-// import { computed } from 'vue'
+// import { ref } from 'vue'
 
 export default {
-    props: ['responses'],
+    props: ['responses', 'details'],
     setup() {
         Rules.hasToken()
         const doThing = async () => {
-            console.log('i did a thing')
+            
         }
             return { store, doThing }
     }
@@ -58,18 +62,19 @@ export default {
     background-color: rgb(10, 10, 14);                                                                                  
     border: 1px;                                                                                                
     border-color: black;
-    color: lightskyblue;
+    color: honeydew;
     max-height: 480;
     overflow-y: scroll;
 }
 
 .replies {
-    background-color: rgb(20, 20, 40);
+    background-color: rgb(14, 17, 16);
     cursor: pointer;
+    color: aliceblue;
 }
 
 .err {
-    background-color: olivedrab;
+    background-color: rgb(158, 122, 96);
 }
 
 .mspace {

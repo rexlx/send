@@ -72,8 +72,8 @@
                 </div>
             </div>
         </div>
-        <Receiver :responses="responses" />
-        <Focus />
+        <Receiver @focus-details="doThing" :responses="responses" />
+        <Focus :details="details" />
         <div class="row tools text-center">
             <div class="col">
                 <select v-model="resPerFetch" class="config">
@@ -109,6 +109,7 @@ export default {
         const selectedCommand = ref('')
         const selectedConfig = ref('')
         const allConfigs = ref([])
+        const details = ref('')
 
         watch(selectedCommand, (currentValue) => {
             command.value = currentValue
@@ -116,7 +117,6 @@ export default {
 
         watch(resPerFetch, (currentValue) => {
             resPerFetch.value = currentValue
-            console.log(resPerFetch.value)
         })
 
         watch(selectedConfig, (currentValue) => {
@@ -253,7 +253,6 @@ export default {
                 ordered: store.config.ordered,
                 reply_to: store.config.command.slice(0, 40)
             }
-            console.log(data)
             q.value = []
             command.value = ""
 
@@ -345,8 +344,11 @@ export default {
             })
         }
 
+        const doThing = async (data) => {
+            details.value = JSON.parse(data).message
+        }
+
         const wsConnect = async () => {
-            console.log('..ok')
             let sck = new WebSocket("ws://storage.nullferatu.com:8888/wsc")
             sck.onopen = () => {
                 console.log("connected nice")
@@ -363,8 +365,10 @@ export default {
             send,
             savedCommands,
             q,
+            details,
             getConfigs,
             responses,
+            doThing,
             delayedRefresh,
             changeConfig,
             refreshDB,
