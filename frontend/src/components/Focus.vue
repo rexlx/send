@@ -66,7 +66,7 @@ export default {
     background-color: rgb(10, 10, 14);                                                                                  
     border: 1px;                                                                                                
     border-color: black;
-    color: rgb(148, 122, 180);
+    color: aliceblue;
     /* color: rgb(182, 199, 198); */
     overflow-y: scroll;
 }

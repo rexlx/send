@@ -24,14 +24,14 @@
             <div class="input-group mb-3 terminal col">
                 <input type="text" class="form-control name" v-model="commandName" placeholder="name">
                 <div class="input-group-prepend">
-                    <button @click="saveCommand()" class="btn btn-outline-info" type="button">save</button>
-                    <button @click="getCommands" class="btn btn-outline-info" type="button">load</button>
+                    <button @click="saveCommand()" class="btn btn-outline-light" type="button">save</button>
+                    <button @click="getCommands" class="btn btn-outline-light" type="button">load</button>
                 </div>
             </div>
             <div class="input-group mb-3 terminal col">
                 <div class="input-group-prepend">
-                    <button @click="addToQueue" class="btn btn-outline-info" type="button">queue</button>
-                    <button @click="send" class="btn btn-outline-info" type="button">send</button>
+                    <button @click="addToQueue" class="btn btn-outline-light" type="button">queue</button>
+                    <button @click="send" class="btn btn-outline-light" type="button">send</button>
                 </div>
                 <input type="text"
                    class="form-control name"
@@ -251,7 +251,7 @@ export default {
                 port: store.config.port,
                 fatal: store.config.fatal,
                 ordered: store.config.ordered,
-                reply_to: store.config.command.slice(0, 40)
+                reply_to: store.config.command.slice(0, 120)
             }
             q.value = []
             command.value = ""

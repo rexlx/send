@@ -4,7 +4,7 @@
         <div @click="$emit('focusDetails', r.reply)"
           class="card-body"
           :class="{ err: !r.good }">
-          {{ r.id }} | {{ r.host }} | {{ r.reply_to }}
+          {{ r.host }} | {{ r.reply_to }} <aside class="mylink" @click="goTo(r)">{{ r.id }}</aside>
         </div>
     </div>
     <!-- <table v-if="responses" class="table table-dark table-striped">
@@ -38,6 +38,7 @@
 <script>
 import {store} from './store.js'
 import Rules from './rules.js'
+import router from "../router/index.js"
 // import notie from 'notie'
 // import { ref } from 'vue'
 
@@ -45,10 +46,10 @@ export default {
     props: ['responses', 'details'],
     setup() {
         Rules.hasToken()
-        const doThing = async () => {
-            
+        const goTo = async (r) => {
+            router.push(`/admin/responses/${r.id}`)
         }
-            return { store, doThing }
+            return { store, goTo }
     }
 }
 </script>
@@ -69,7 +70,6 @@ export default {
 
 .replies {
     background-color: rgb(14, 17, 16);
-    cursor: pointer;
     color: aliceblue;
 }
 
@@ -80,6 +80,11 @@ export default {
 .mspace {
     font-family: monospace;
     color: whitesmoke;
+}
+
+.mylink {
+    float: right;
+    cursor: pointer;
 }
 
 </style>
