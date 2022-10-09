@@ -73,8 +73,16 @@ export default {
     color: aliceblue;
 }
 
+.replies:hover {
+    background: rgb(12, 36, 36);
+}
+
 .err {
     background-color: rgb(158, 122, 96);
+}
+
+.err:hover {
+    background-color: tomato;
 }
 
 .mspace {

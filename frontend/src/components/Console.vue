@@ -255,7 +255,7 @@ export default {
                 port: store.config.port,
                 fatal: store.config.fatal,
                 ordered: store.config.ordered,
-                reply_to: store.config.command.slice(0, 120)
+                reply_to: store.config.command.slice(0, 60)
             }
             q.value = []
             command.value = ""
