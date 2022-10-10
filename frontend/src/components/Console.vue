@@ -60,7 +60,7 @@
                 </select>
             </div>
             <div class="col">
-                <button @click="tab=0" class="btn btn-outline-light" type="button">mode</button>
+                <button @click="tab=0" class="btn btn-outline-light" type="button">history</button>
             </div>
             </div>
         </div>
@@ -79,12 +79,13 @@
         <Focus :tab="tab" :details="details" />
         <div class="row tools text-center">
             <div class="col">
+                <button @click="refreshDB" class="btn btn-outline-dark" type="button">bonk</button>
                 <select v-model="resPerFetch" class="config">
                     <option disabled value="25">results/page</option>
                     <option value="50">50</option>
-                    <option value="50">100</option>
-                    <option value="50">150</option>
-                    <option value="50">200</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
                 </select>
             </div>
         </div>
@@ -443,14 +444,6 @@ select {
     padding: 10px;
     border-radius: 2px;
     border: 1px solid black;
-}
-
-.active {
-    background: rgba(70, 140, 210, 0.600);
-}
-
-.tools:hover {
-    background: rgb(12, 12, 36);
 }
 
 input[type=text] {

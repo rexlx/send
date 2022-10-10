@@ -2,7 +2,7 @@
     <div v-if="store.token !== ''" class="container">
         <div class="row">
             <div class="col">
-                <img alt="bookNshib" :src="`${bucket}/stock9.jpg`" class="img-fluid mt-5">
+                <img alt="welcome" :src="`${bucket}/stock9.jpg`" class="img-fluid mt-5">
             </div>
         </div>
         <div class="row">
@@ -18,7 +18,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <img alt="bookNshib" :src="`${bucket}/stock0.jpeg`" class="img-fluid mt-5">
+                <img alt="burr" :src="`${bucket}/stock0.jpeg`" class="img-fluid mt-5">
             </div>
         </div>
         <div class="row">
@@ -37,6 +37,7 @@ export default {
         console.log(process.env.VUE_APP_IMG_URL)
     return {
       store,
+    //   bucket: process.env.VUE_APP_IMG_URL,
       bucket: "https://storage.googleapis.com/rfitzhugh"
     }
   }

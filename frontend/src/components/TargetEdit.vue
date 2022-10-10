@@ -1,5 +1,12 @@
 <template>
     <div class="container">
+        <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4 errata">this feature incomplete</h1>
+                    <p class="lead">you can add as many <em>targets</em> as you'd like.</p>
+                    <p>right now we use a list of strings for hosts. one day it should be a slice of type targets</p>
+                </div>
+            </div>
         <div class="row">
             <div class="col">
                 <h1 class="mt-3">target details</h1>
