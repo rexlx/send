@@ -4,13 +4,13 @@
   <div>
     <router-view :key="componentKey" @success="success" @error="error" @warning="warning" @forceUpdate="forceUpdate" />
   </div>
-  <Footer />
+  <!-- <Footer /> -->
 </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue"
-import Footer from "./components/Footer.vue"
+// import Footer from "./components/Footer.vue"
 import { store } from './components/store.js'
 import notie from 'notie'
 
@@ -25,7 +25,7 @@ export default {
   name: 'App',
   components: {
     Header,
-    Footer,
+    // Footer,
   },
   data() {
     return {
