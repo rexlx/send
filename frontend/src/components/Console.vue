@@ -24,14 +24,14 @@
             <div class="input-group mb-3 terminal col">
                 <input type="text" class="form-control name" v-model="commandName" placeholder="name">
                 <div class="input-group-prepend">
-                    <button @click="saveCommand()" class="btn btn-outline-light" type="button">save</button>
-                    <button @click="getCommands" class="btn btn-outline-light" type="button">load</button>
+                    <button @click="saveCommand" class="btn btn-dark" type="button">save</button>
+                    <button @click="getCommands" class="btn btn-dark" type="button">load</button>
                 </div>
             </div>
             <div class="input-group mb-3 terminal col">
                 <div class="input-group-prepend">
-                    <button @click="addToQueue" class="btn btn-outline-light" type="button">queue</button>
-                    <button @click="send" class="btn btn-outline-light" type="button">send</button>
+                    <button @click="addToQueue" class="btn btn-dark" type="button">queue</button>
+                    <button @click="send" class="btn btn-dark" type="button">send</button>
                 </div>
                 <input type="text"
                    class="form-control name"
@@ -402,9 +402,9 @@ select {
 
 .terminal {
     color: rgb(70, 140, 210);
-    padding: 20px;
+    padding: 10px;
     margin: 1px;
-    width: 50%;
+    /* width: 50%; */
     float: right;
     border: 1px;
     border-color: black;

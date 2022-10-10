@@ -1,13 +1,13 @@
 <template>
     <div v-if="store.token !== ''" class="container">
         <div class="row">
-            <div class="col">
-                <img alt="welcome" :src="`${bucket}/stock9.jpg`" class="img-fluid mt-5">
+            <div class="col-md">
+                <p class="row text-center">welcome {{ store.user.email }}. click the admin dropdown to reveal more options</p>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <p>welcome {{ store.user.email }}</p>
+                <img alt="welcome" :src="`${bucket}/stock9.jpg`" class="img-fluid mt-5">
             </div>
         </div>
     </div>
