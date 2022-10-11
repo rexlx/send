@@ -41,7 +41,7 @@
                             ></text-input>
                 <text-input v-model="config.hosts"
                             type="text"
-                            label="hosts"
+                            label="hosts (separated by space)"
                             :value="config.hosts"
                             name="hosts"
                             ></text-input>
