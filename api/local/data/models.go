@@ -915,10 +915,14 @@ func (res *Reply) InsertResponse(response Reply) (int, error) {
 
 	var newID int
 
+	if len(response.ReplyTo) > 59 {
+		response.ReplyTo = response.ReplyTo[:59]
+	}
+
 	q := `insert into replies (command_sent, reply_received, reply, config, good, host, reply_to)
 	values ($1, $2, $3, $4, $5, $6, $7) returning id
 	`
-
+	fmt.Println(response)
 	err := db.QueryRowContext(ctx, q,
 		response.TimeTX,
 		response.TimeRX,
