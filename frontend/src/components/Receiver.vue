@@ -2,9 +2,12 @@
   <div class="container-fluid rx">
     <div v-for="r in responses" :key=r.id class="card replies" :class="{ warn: r.good }">
         <div @click="$emit('focusDetails', r.reply)"
-          class="card-body"
+          class="card-body d-flex"
           :class="{ err: !r.good }">
-          {{ r.host }} | {{ r.reply_to }} <aside class="mylink" @click="goTo(r)">{{ r.id }}</aside>
+          <div class="mr-auto p-2 mylink" @click="goTo(r)">{{ r.id }}</div>
+          <div class="mr-auto p-2">{{ r.host }}</div>
+          <div class="ml-auto p-2">{{ r.reply_to }}</div>
+          <!-- {{ r.host }} | {{ r.reply_to }} <aside class="mylink" @click="goTo(r)">{{ r.id }}</aside> -->
         </div>
     </div>
     <!-- <table v-if="responses" class="table table-dark table-striped">
@@ -69,7 +72,7 @@ export default {
 }
 
 .replies {
-    background-color: rgb(14, 17, 16);
+    background-color: rgb(15, 17, 19);
     color: aliceblue;
 }
 
@@ -78,11 +81,11 @@ export default {
 }
 
 .err {
-    background-color: rgb(158, 122, 96);
+    background-color: rgb(160, 122, 96);
 }
 
 .err:hover {
-    background-color: tomato;
+    background-color: rgb(180, 60, 30);
 }
 
 .mspace {
@@ -91,7 +94,7 @@ export default {
 }
 
 .mylink {
-    float: right;
+    color: white;
     cursor: pointer;
 }
 
