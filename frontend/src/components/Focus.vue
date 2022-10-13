@@ -7,6 +7,11 @@
             </div>
         </div>
     </div>
+    <div v-else-if="tab > 1" class="details">
+        <div v-for="i in q" :key="i">
+            <div>{{ i }}</div>
+        </div>
+    </div>
     <div v-else class="details">
         {{ details }}
     </div>
@@ -20,7 +25,7 @@ import notie from 'notie'
 import { ref } from 'vue'
 
 export default {
-    props: ['details', 'tab'],
+    props: ['details', 'tab', 'q'],
     setup() {
         const reply = ref("")
         Rules.hasToken()

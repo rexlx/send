@@ -35,7 +35,7 @@
                 </div>
                 <input type="text"
                    class="form-control name"
-                   ref="prompt"
+                   ref="mainFocus"
                    placeholder="command"
                    v-model="command"
                    @keyup.enter="addToQueue"
@@ -61,22 +61,13 @@
             </div>
             <div class="col">
                 <button @click="tab=0" class="btn btn-outline-light" type="button">history</button>
+                <button @click="tab=2" class="btn btn-outline-light" type="button">queue</button>
+                <button @click="clearQueue" class="btn btn-outline-warning" type="button">clear queue</button>
             </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div v-if="command" class="single">sending: {{ command }}</div>
-                <div v-else-if="q.length > 0" class="single">
-                    sending:
-                    <div v-for="i in q" :key="i" >
-                        <span class="single">{{ i }}</span>
-                    </div>  
-                </div>
             </div>
         </div>
         <Receiver @focus-details="doThing" :responses="responses" />
-        <Focus :tab="tab" :details="details" />
+        <Focus :tab="tab" :details="details" :q="q" />
         <div class="row tools text-center">
             <div class="col">
                 <button @click="refreshDB" class="btn btn-outline-dark" type="button">bonk</button>
@@ -114,21 +105,23 @@ export default {
         const selectedConfig = ref('')
         const allConfigs = ref([])
         const details = ref('')
-        const tab = ref(0)
+        const tab = ref(2)
+        const mainFocus = ref(null)
 
         watch(selectedCommand, (currentValue) => {
             command.value = currentValue
+            mainFocus.value.focus()
         })
 
         watch(resPerFetch, (currentValue) => {
             if (currentValue > 25) {
                resPerFetch.value = currentValue 
             }
-            resPerFetch.value = currentValue
         })
 
         watch(selectedConfig, (currentValue) => {
             changeConfig(currentValue)
+            mainFocus.value.focus()
         })
 
         onMounted(() => {
@@ -212,7 +205,12 @@ export default {
                     }).catch((error) => {
                     console.log(error)
                 })
-            }, 2250);
+            }, 1250);
+        }
+
+        const clearQueue = async () => {
+            q.value = []
+            command.value = ""
         }
 
         const addToQueue = async () => {
@@ -241,8 +239,24 @@ export default {
         }
 
         const send = async () => {
+            if (!store.config.hosts) {
+                notie.alert({
+                        type: "error",
+                        text: "no hosts to send to (likely no config selected)"
+                    })
+                    return
+            }
             if (command.value !== "") {
                 q.value.push(command.value)
+            } else {
+                console.log(command.value)
+                if (q.value.length === 0) {
+                    notie.alert({
+                        type: "error",
+                        text: "no command to send"
+                    })
+                    return
+                }
             }
 
             store.config.command = q.value.join(';')
@@ -259,7 +273,6 @@ export default {
                 port: store.config.port,
                 fatal: store.config.fatal,
                 ordered: store.config.ordered,
-                reply_to: store.config.command.slice(0, 60)
             }
             q.value = []
             command.value = ""
@@ -272,6 +285,7 @@ export default {
                         type: "error",
                         text: res.message
                     })
+                    // console.log(res.error)
                 } else {
                     store.commandHistory.unshift(res.data.config)
                     // store.commandHistory.push(res.data.config)
@@ -282,7 +296,9 @@ export default {
                     type: "error",
                     text: error
                 })
+                return
             })
+            mainFocus.value.focus()
             notie.alert({
                     type: "success",
                     text: "command sent"
@@ -358,7 +374,7 @@ export default {
         }
 
         const wsConnect = async () => {
-            let sck = new WebSocket("ws://storage.nullferatu.com:8888/wsc")
+            let sck = new WebSocket("ws://localhost:8888/wsc")
             sck.onopen = () => {
                 console.log("connected nice")
             }
@@ -370,6 +386,7 @@ export default {
             commandName,
             getCommands,
             addToQueue,
+            clearQueue,
             allConfigs,
             send,
             savedCommands,
@@ -387,6 +404,7 @@ export default {
             selectedConfig,
             tab,
             wsConnect,
+            mainFocus,
             socket
             }
     }
