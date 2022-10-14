@@ -6,6 +6,24 @@
             </div>
         </div>
         <hr>
+        <div class="row">
+            <div class="col">
+                <div class="col">
+                <select v-model="selectedConfig" class="config">
+                    <option disabled value="">configs</option>
+                    <option v-for="c in allConfigs" :value="c.id" :key="c.id">
+                    {{c.name}}
+                    </option>
+                </select>
+                <select v-model="selectedCommand" class="config">
+                    <option disabled value="">commands</option>
+                    <option v-for="c in savedCommands" :value="c.command" :key="c.id">
+                    {{c.command_name}}
+                    </option>
+                </select>
+            </div>
+            </div>
+        </div>
         <div class="row config-details">
             <div class="col details">
                 config: {{ store.config.name }}
@@ -44,27 +62,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <select v-model="selectedConfig" class="config">
-                    <option disabled value="">configs</option>
-                    <option v-for="c in allConfigs" :value="c.id" :key="c.id">
-                    {{c.name}}
-                    </option>
-                </select>
-            <div class="col">
-                <select v-model="selectedCommand" class="config">
-                    <option disabled value="">commands</option>
-                    <option v-for="c in savedCommands" :value="c.command" :key="c.id">
-                    {{c.command_name}}
-                    </option>
-                </select>
-            </div>
-            <div class="col">
-                <button @click="tab=0" class="btn btn-outline-light" type="button">history</button>
-                <button @click="tab=2" class="btn btn-outline-light" type="button">queue</button>
-                <button @click="clearQueue" class="btn btn-outline-warning" type="button">clear queue</button>
-            </div>
-            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" @click="tab=1" :class="{active : tab == 1}">queue</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" @click="tab=0" :class="{active : tab == 0}">history</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" :class="{active : tab == 2}" aria-disabled="true">details</a>
+                </li>
+            </ul>
+            <!-- <div class="col">
+                <button @click="tab=0" class="btn btn-dark" type="button">history</button>
+                <button @click="tab=2" class="btn btn-dark" type="button">queue</button>
+                <button @click="clearQueue" class="btn btn-dark" type="button">clear queue</button>
+            </div> -->
         </div>
         <Receiver @focus-details="doThing" :responses="responses" />
         <Focus :tab="tab" :details="details" :q="q" />
@@ -105,7 +118,7 @@ export default {
         const selectedConfig = ref('')
         const allConfigs = ref([])
         const details = ref('')
-        const tab = ref(2)
+        const tab = ref(1)
         const mainFocus = ref(null)
 
         watch(selectedCommand, (currentValue) => {
@@ -370,7 +383,7 @@ export default {
 
         const doThing = async (data) => {
             details.value = JSON.parse(data).message
-            tab.value = 1
+            tab.value = 2
         }
 
         const wsConnect = async () => {

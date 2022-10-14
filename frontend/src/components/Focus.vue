@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid log">
-    <div v-if="tab < 1" >
+    <div v-if="tab == 0" >
         <div v-for="cfg in store.commandHistory" :key="cfg" >
             <div>
                 {{ cfg.command }}
             </div>
         </div>
     </div>
-    <div v-else-if="tab > 1" class="details">
+    <div v-else-if="tab == 1" class="details">
         <div v-for="i in q" :key="i">
             <div>{{ i }}</div>
         </div>
