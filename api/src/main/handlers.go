@@ -47,23 +47,24 @@ func (app *settings) Login(w http.ResponseWriter, r *http.Request) {
 		data.Message = "invalid json"
 		_ = app.writeJSON(w, http.StatusBadRequest, data)
 	}
-
+	app.infoLog.Println("LOGIN CALLED", r.RemoteAddr)
 	user, err := app.models.User.GetByEmail(creds.Email)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
-	app.infoLog.Println("login attempt for...", user.Email)
+	app.infoLog.Println("LOGIN ATTEMPT", user.Email, r.RemoteAddr)
 	validPwd, err := user.PasswordMatches(creds.Password)
 	if err != nil || !validPwd {
 		app.errorJSON(w, errors.New("sorry, that didn't work"))
-		app.errorLog.Println("failed login attempt for", creds.Email)
+		app.errorLog.Println("LOGIN ERROR", creds.Email, r.RemoteAddr)
 		return
 	}
 
 	// is user active
 	if user.Active == 0 {
-		app.errorJSON(w, errors.New("inactive user"))
+		app.errorLog.Println("ACCESS REVOKED", creds.Email, r.RemoteAddr)
+		app.errorJSON(w, errors.New("this account is locked"))
 		return
 	}
 
@@ -72,7 +73,7 @@ func (app *settings) Login(w http.ResponseWriter, r *http.Request) {
 		app.errorJSON(w, err)
 		return
 	}
-	app.infoLog.Println("successful login for", creds.Email)
+	app.infoLog.Println("LOGIN SUCCESS", creds.Email)
 	err = app.models.Token.InsertToken(*token, *user)
 	if err != nil {
 		app.errorJSON(w, err)
@@ -103,10 +104,10 @@ func (app *settings) Logout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.infoLog.Printf("logging %v out...", request.User)
+	app.infoLog.Println("LOGOUT", request.User)
 	err = app.models.Token.DeleteByToken(request.Token)
 	if err != nil {
-		app.errorJSON(w, errors.New("bad json"))
+		app.errorJSON(w, errors.New("an error occurred and theres nothing you can do"))
 		return
 	}
 

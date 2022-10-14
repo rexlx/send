@@ -914,9 +914,6 @@ func (res *Reply) InsertResponse(response Reply) (int, error) {
 	defer cancel()
 
 	var newID int
-	// if len(response.ReplyTo) > 59 {
-	// 	response.ReplyTo = response.ReplyTo[:59] + "..."
-	// }
 
 	// var config Config
 	// json.Unmarshal([]byte(response.Config), &config)
