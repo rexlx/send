@@ -1,3 +1,12 @@
+## send commands from the console
+![console](https://storage.googleapis.com/rfitzhugh/console.png)
+
+## manage user access
+![console](https://storage.googleapis.com/rfitzhugh/user-mgmt.png)
+
+## manage configurations
+![console](https://storage.googleapis.com/rfitzhugh/configs.png)
+
 This is mostly a place for me to play around with vue. I repurposed the stuff taught in [this](https://www.udemy.com/course/working-with-vue-3-and-go/) course. That said, I'd still like to post some screenshots and instructions in the event anyone happens upon this repo. Until then, I'm going to assume you know / have a few things.
 
 1. you will need [go](https://go.dev/doc/install) and [node](https://nodejs.org/en/download/)/npm installed.
