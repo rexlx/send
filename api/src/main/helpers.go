@@ -63,7 +63,7 @@ func (app *settings) writeJSON(w http.ResponseWriter, status int, data interface
 
 // errorJSON takes an error, and optionally a response status code, and generates and sends
 // a json error response
-func (app *settings) errorJSON(w http.ResponseWriter, err error, status ...int) {
+func (app *settings) errorJSON(w http.ResponseWriter, err error, status ...int) error {
 	statusCode := http.StatusBadRequest
 
 	if len(status) > 0 {
@@ -75,6 +75,7 @@ func (app *settings) errorJSON(w http.ResponseWriter, err error, status ...int) 
 	payload.Message = err.Error()
 
 	app.writeJSON(w, statusCode, payload)
+	return nil
 }
 
 func (app *settings) GetRuntimeParams(path string) (RuntimeParms, error) {
