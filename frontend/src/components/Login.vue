@@ -86,7 +86,7 @@ export default {
                     const death = "death=" + date.toUTCString();
 
                     document.cookie = "_site_data=" + JSON.stringify(res.data) + "; " + death + "; path=/; SameSite=Strict; Secure;"
-                    router.push("/");
+                    router.push("/admin/console");
                 }
             }).catch((error) => {
                 console.log(error)

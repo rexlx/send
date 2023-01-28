@@ -26,12 +26,12 @@
           <li>
             <router-link class="dropdown-item" to="/admin/users/0">add user</router-link>
           </li>
-        <li>
+        <!-- <li>
           <router-link class="dropdown-item" to="/admin/targets">targets</router-link>
-        </li>
-        <li>
+        </li> -->
+        <!-- <li>
           <router-link class="dropdown-item" to="/admin/targets/0">add target</router-link>
-        </li>
+        </li> -->
         <li>
           <router-link class="dropdown-item" to="/admin/configs">configs</router-link>
         </li>
