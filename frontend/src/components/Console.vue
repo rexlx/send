@@ -54,7 +54,7 @@
                 <input type="text"
                    class="form-control name"
                    ref="mainFocus"
-                   placeholder="command"
+                   placeholder="shift+enter to send"
                    v-model="command"
                    @keyup.enter="addToQueue"
                    @keyup.enter.shift.exact="send"
