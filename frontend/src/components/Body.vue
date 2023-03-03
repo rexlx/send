@@ -5,20 +5,15 @@
                 <p class="row text-center">welcome {{ store.user.email }}. click the admin dropdown to reveal more options</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <img alt="welcome" :src="`${bucket}/stock9.jpg`" class="img-fluid mt-5">
-            </div>
-        </div>
     </div>
     <div v-else class="container">
         <div class="row">
-            <h3>go away</h3>
+            <h3>logged out</h3>
             <hr>
         </div>
         <div class="row">
             <div class="col">
-                <img alt="burr" :src="`${bucket}/stock0.jpeg`" class="img-fluid mt-5">
+                <p>please login to continue.</p>
             </div>
         </div>
         <div class="row">
@@ -38,7 +33,6 @@ export default {
     return {
       store,
     //   bucket: process.env.VUE_APP_IMG_URL,
-      bucket: "https://storage.googleapis.com/rfitzhugh"
     }
   }
 }
