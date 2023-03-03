@@ -71,7 +71,7 @@ import { useRoute } from 'vue-router'
 export default {
     setup() {
         const route = useRoute()
-        const config = ref('')
+        const config = ref({})
         Rules.hasToken()
         if (route.params.configId > 0) {
             fetch(process.env.VUE_APP_API_URL + "/admin/configs/get/" + route.params.configId, Rules.requestOptions(""))
