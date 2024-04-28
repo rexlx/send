@@ -4,6 +4,12 @@
 
 -- Dumped from database version 14.5 (Ubuntu 14.5-0ubuntu0.22.04.1)
 -- Dumped by pg_dump version 14.5 (Ubuntu 14.5-0ubuntu0.22.04.1)
+CREATE USER mothman WITH PASSWORD 'postgres';
+GRANT ALL PRIVILEGES ON DATABASE "send" TO mothman;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO mothman;
+CREATE DATABASE users WITH OWNER = mothman;
+-- insert into users (email, first_name, last_name, "password", user_active, created_at, updated_at) values ()
+
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -72,11 +78,11 @@ CREATE TABLE public.replies (
     command_sent timestamp without time zone DEFAULT now() NOT NULL,
     reply_received timestamp without time zone DEFAULT now(),
     reply jsonb DEFAULT '{}'::jsonb,
+    reply_to character varying(255) DEFAULT 'no-reply'::character varying NOT NULL,
     config jsonb DEFAULT '{}'::jsonb,
     good boolean DEFAULT false NOT NULL,
     host character varying(255) DEFAULT 'nonE'::character varying NOT NULL
 );
-
 
 ALTER TABLE public.replies OWNER TO mothman;
 
@@ -219,7 +225,6 @@ ALTER TABLE public.tokens_id_seq OWNER TO mothman;
 --
 
 ALTER SEQUENCE public.tokens_id_seq OWNED BY public.tokens.id;
-
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: mothman
@@ -367,6 +372,8 @@ ALTER TABLE ONLY public.saved_commands
 ALTER TABLE ONLY public.tokens
     ADD CONSTRAINT tokens_relation_1 FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
+
+INSERT INTO public.users (email, first_name, last_name, "password", user_active, created_at, updated_at) VALUES ('admin@admin.com', 'admin', 'admin', '$2a$12$rxOxyleRpZW9y3VPQpXLaeYWgoMy2MU1J7JDWTnN4LpwLsl3tFLhe', 1, '2022-02-01', '2022-02-01');
 
 --
 -- PostgreSQL database dump complete
